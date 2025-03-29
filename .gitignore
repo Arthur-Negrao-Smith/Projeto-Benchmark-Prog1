@@ -18,6 +18,7 @@
 *.pdf
 *.o
 *.pytest_cache/
+.vscode
 
 # Ignore directories
 .venv/*
