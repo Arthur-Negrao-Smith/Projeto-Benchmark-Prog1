@@ -8,7 +8,7 @@ Para manutenção da organização do projeto, foi decidido arbitrariamente a se
 
 ```
 src/    # Localização dos códigos do projeto
-├── C/          # Todo o projeto escrito em C
+├── c/          # Todo o projeto escrito em C
 │   ├── bin/            # Todos os binários compilados de C
 │   ├── include/        # Todos o arquivos de cabeçalho de C
 │   ├── obj/            # Todos os arquivos objeto (.o) de C
@@ -22,7 +22,6 @@ src/    # Localização dos códigos do projeto
     ├── data/           # Armazena todos os dados coletados durante as simulações
     └── pdf/            # Armazena todos os PDFs que foram gerados no projeto
 ```
-
 
 ## Autores
 

@@ -7,15 +7,15 @@ endif
 
 # Defining the dir paths
 ifeq ($SYS,LINUX)
-	BIN := ./src/C/bin
-	INCLUDE := ./src/C/include
-	OBJ := ./src/C/obj
-	SRC := ./src/C/src
+	BIN := ./src/c/bin
+	INCLUDE := ./src/c/include
+	OBJ := ./src/c/obj
+	SRC := ./src/c/src
 else
-	BIN := src\C\bin
-	INCLUDE := src\C\include
-	OBJ := src\C\obj
-	SRC := src\C\src
+	BIN := src\c\bin
+	INCLUDE := src\c\include
+	OBJ := src\c\obj
+	SRC := src\c\src
 endif
 
 # General variables
