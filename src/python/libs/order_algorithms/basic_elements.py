@@ -41,7 +41,7 @@ class ListCreator:
         """
         Print all numbers list
         """
-        print("[ " , end="")
+        print("\n[ " , end="")
         for c, number in enumerate(self.numbers_list):
             if c % 20 != 0 or c == 0:
                 print(f"{number}, ", end="")

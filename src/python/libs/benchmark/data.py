@@ -1,9 +1,9 @@
 # Definig metrics
-class BenchMatrics:
+class BenchMetrics:
     """
     Class to storage data of simulation
     """
-    memory_usage: int
+    memory_usage: tuple[int]
     execution_time: float
     steps: int
     label: str
