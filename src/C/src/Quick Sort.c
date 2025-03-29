@@ -33,3 +33,9 @@ void quick_sort_helper(int arr[], int low, int high, int *comparisons, int *swap
     }
 
 }
+
+void quick_sort(int arr[], int n, int *comparisons, int *swaps){
+    *comparisons = 0;
+    *swaps =0;
+    quick_sort_helper(arr, 0, n - 1, comparisons, swaps):
+}
