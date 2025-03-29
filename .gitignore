@@ -1,0 +1,20 @@
+# Ignore all
+*
+
+# Don't ignore files with extension
+!*.*
+
+# Don't ignore directories
+!*/
+
+# Ignore file with extensios
+*.exe
+*.txt
+*.pyc
+*.pdf
+*.o
+
+# Ignore directories
+.venv/*
+venv/*
+*/__pycache__/
