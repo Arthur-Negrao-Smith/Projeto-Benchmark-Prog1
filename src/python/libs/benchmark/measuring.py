@@ -1,21 +1,44 @@
 # Intern imports
-from .data import BenchMatrics
+from .data import BenchMetrics
 from types import FunctionType
 
 # Extern imports
 import logging
 from time import time
-from tracemalloc import start, stop
+import tracemalloc as tmc
 
-def Benchmark(func: FunctionType) -> BenchMatrics:
-    def wrapper(*args):
-        start() # Init calculate memory
+
+def benchmark(func: FunctionType) -> BenchMetrics:
+    """
+    Decorator to calculate the metrics
+
+    Returns:
+        BenchMetrics: Return all metrics calculated
+    """
+    def wrapper(self, *args):
+        
+        metrics: BenchMetrics = BenchMetrics()
+
+        tmc.start() # Init calculate memory
+        time_start: int = time() # time of estart program
+
+        function_metrics: BenchMetrics = func(self, *args) # function
+        
+        metrics.execution_time = time() - time_start # Collect total time
+        metrics.memory_usage = tmc.get_traced_memory() # collect memory usage
+        tmc.stop() # Stop memory calcute
+
+        metrics.label = function_metrics.label
+        metrics.steps = function_metrics.steps
+        
+        return metrics
+    return wrapper
 
 
 # To measure the resources
 class BenchMeasuring:
-    def __init__(self, data: BenchMatrics) -> None:
-        self.metrics: BenchMatrics = data
+    def __init__(self, data: BenchMetrics) -> None:
+        self.metrics: BenchMetrics = data
 
     def increment_step(self) -> None:
         """
