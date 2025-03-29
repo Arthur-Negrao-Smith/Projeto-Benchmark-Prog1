@@ -52,3 +52,9 @@ void merge_sort_helper(int arr[], int l, int r, int *comparisions, int *swaps){
         merge(arr, l, m, r, comparisions, swaps);
     }
 }
+
+void merge_sort(int arr[], int n, int *comparisons, int *swaps){
+    *comparisons = 0;
+    *swaps = 0;
+    merge_sort_helper(arr, 0, n - 1, comparisons, swaps);
+}
