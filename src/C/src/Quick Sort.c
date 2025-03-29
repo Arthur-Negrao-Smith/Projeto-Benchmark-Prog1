@@ -24,3 +24,12 @@ int partition(int arr[], int low, int high, int *comparisons, int *swaps){
     (*swaps)++;
     return(i+1);
 }
+
+void quick_sort_helper(int arr[], int low, int high, int *comparisons, int *swaps){
+    if(low<high){
+        int pi = partition(arr, low, high, comparisons, swaps);
+        quick_sort_helper(arr. low, pi - 1, comparisons, swaps);
+        quick_sort_helper(arr, pi+1, high, comparisons, swaps);
+    }
+
+}
