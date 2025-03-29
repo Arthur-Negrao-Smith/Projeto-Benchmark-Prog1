@@ -75,13 +75,13 @@ void test_bubble_sort(){
 
             int comparisions, swaps;//variáveis para métricas
             clock_t start = clock();//marca tempo inicial
-            quick_sort(arr, size, &comparisions, &swaps);//executa ordenação
+            bubble_sort(arr, size, &comparisions, &swaps);//executa ordenação
             clock_t end = clock();//marca tempo final
             double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;//calcula tempo decorrido em segundos
             
             //imprime resultados formatados
-            printf("%D\t%-16s\t%.6f\t%d\n",
-            size, data_types[j], time_taken, comparisions, swaps);\
+            printf("%d\t%-16s\t%.6f\t%d\n",
+            size, data_types[j], time_taken, comparisions, swaps);
 
             free(arr);//libera memória alocada
         }
@@ -89,5 +89,7 @@ void test_bubble_sort(){
 }
 
 int main(){
-    
+    srand(time(0));
+    test_bubble_sort();
+    return 0;
 }
