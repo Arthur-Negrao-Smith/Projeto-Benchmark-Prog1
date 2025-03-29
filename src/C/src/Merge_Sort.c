@@ -78,3 +78,33 @@ void generate_data(int arr[], int size, const char* data_type){
         }
     }
 }
+
+void test_merge_sort() {
+    int sizes[] = {1000, 10000, 100000, 1000000};
+    const char* data_types[] = {"sorted", "reverse_sorted", "random", "many_duplicates"};
+    int num_sizes = sizeof(sizes)/sizeof(sizes[0]);
+    int num_types = sizeof(data_types)/sizeof(data_types[0]);
+
+    printf("Merge Sort Performance Test\n");
+    printf("Size\tData Type\t\tTime (s)\tComparisons\tSwaps\n");
+    printf("------------------------------------------------------------\n");
+
+    for (int i = 0; i < num_sizes; i++) {
+        for (int j = 0; j < num_types; j++) {
+            int size = sizes[i];
+            int* arr = (int*)malloc(size * sizeof(int));
+            generate_data(arr, size, data_types[j]);
+
+            int comparisons, swaps;
+            clock_t start = clock();
+            merge_sort(arr, size, &comparisons, &swaps);
+            clock_t end = clock();
+            double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+            printf("%d\t%-16s\t%.6f\t%d\t\t%d\n", 
+                   size, data_types[j], time_taken, comparisons, swaps);
+
+            free(arr);
+        }
+    }
+}
