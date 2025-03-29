@@ -17,7 +17,7 @@ void bubble_sort (int arr[], int n, int *comparisons, int *swaps){
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
-                (*swaps)++; // Incrementa contador de trocas
+                (*swaps)++; //incrementa contador de trocas
             }
         }
     }

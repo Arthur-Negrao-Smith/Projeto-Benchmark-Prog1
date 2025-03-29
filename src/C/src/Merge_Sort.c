@@ -58,3 +58,23 @@ void merge_sort(int arr[], int n, int *comparisons, int *swaps){
     *swaps = 0;
     merge_sort_helper(arr, 0, n - 1, comparisons, swaps);
 }
+
+void generate_data(int arr[], int size, const char* data_type){
+    if(strcmp(data_type, "sorted")==0){
+        for(int i; i < size; i++){
+            arr[i] = i;
+        }
+    }else if(strcmp(data_type, "reverse_sorted") == 0){
+        for (int i = 0; i<size; i++){
+            arr[i] = size - 1;
+        }
+    }else if(strcmp(data_type, "random")==0){
+        for(int i =0; i<size; i++){
+            arr[i] = rand() % size;
+        }
+    }else if(strcmp(data_type, "many_duplicates")==0){
+        for(int i = 0; i< size; i++){
+            arr[i] = rand() % (size / 10);
+        }
+    }
+}
