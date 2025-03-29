@@ -7,6 +7,10 @@
 # Don't ignore directories
 !*/
 
+# Don't ignore
+!Makefile
+!LICENSE
+
 # Ignore file with extensios
 *.exe
 *.txt
