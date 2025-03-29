@@ -1,5 +1,16 @@
-import logging
+# Intern imports
 from .data import BenchMatrics
+from types import FunctionType
+
+# Extern imports
+import logging
+from time import time
+from tracemalloc import start, stop
+
+def Benchmark(func: FunctionType) -> BenchMatrics:
+    def wrapper(*args):
+        start() # Init calculate memory
+
 
 # To measure the resources
 class BenchMeasuring:

@@ -17,6 +17,7 @@
 *.pyc
 *.pdf
 *.o
+*.pytest_cache/
 
 # Ignore directories
 .venv/*
