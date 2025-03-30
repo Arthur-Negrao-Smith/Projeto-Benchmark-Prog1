@@ -3,6 +3,22 @@
 #include <time.h>    //para medir tempo de execução (clock()) e gerar sementes aleatórias (time)
 #include <string.h>  //para comparar strings (strcmp)
 
+
+int partition(int arr[], int low, int high, int *comparisons, int *swaps);
+void quick_sort_helper(int arr[], int low, int high, int *comparisons, int *swaps);
+void quick_sort(int arr[], int n, int *comparisons, int *swaps);
+void generate_data(int arr[], int size, const char* data_type);
+void test_quick_sort();
+
+
+int main() {
+    srand(time(0));//inicializa a semente para números aleatórios
+    test_quick_sort();//executa os testes
+    return 0;//retorna 0 indicando sucesso
+}
+
+
+
 /* Função de partição para o Quick Sort (esquema de Lomuto*/
 int partition(int arr[], int low, int high, int *comparisons, int *swaps) {
     int pivot = arr[high];//seleciona o último elemento como pivô
@@ -113,10 +129,4 @@ void test_quick_sort() {
             free(arr);//libera a memória alocada para o array
         }
     }
-}
-
-int main() {
-    srand(time(0));//inicializa a semente para números aleatórios
-    test_quick_sort();//executa os testes
-    return 0;//retorna 0 indicando sucesso
 }

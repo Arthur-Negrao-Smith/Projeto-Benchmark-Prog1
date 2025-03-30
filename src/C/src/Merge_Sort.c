@@ -3,6 +3,23 @@
 #include <time.h>    // Para medir tempo de execução (clock()) e gerar números aleatórios (time())
 #include <string.h>  // Para comparar strings (strcmp())
 
+void merge(int arr[], int l, int m, int r, int *comparisons, int *swaps);
+void merge_sort_helper(int arr[], int l, int r, int *comparisons, int *swaps);
+void merge_sort(int arr[], int n, int *comparisons, int *swaps);
+void generate_data(int arr[], int size, const char* data_type);
+void test_merge_sort();
+
+
+
+int main() {
+    srand(time(0));//inicializa a semente para números aleatórios
+    test_merge_sort();//executa os testes
+    return 0;//retorna 0 indicando sucesso
+}
+
+
+
+
 /*função que combina dois subarrays ordenados em um único array ordenado
    parâmetros:
    -arr[]: Array principal que será ordenado
@@ -161,10 +178,4 @@ void test_merge_sort() {
             free(arr);//libera a memória alocada para o array
         }
     }
-}
-
-int main() {
-    srand(time(0));//inicializa a semente para números aleatórios
-    test_merge_sort();//executa os testes
-    return 0;//retorna 0 indicando sucesso
 }

@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 
+void bubble_sort (int arr[], int n, int *comparisons, int *swaps);
+void generate_data(int arr[], int size, const char* data_type);
+void test_bubble_sort();
+
+
+
+int main(){
+    srand(time(0));
+    test_bubble_sort();
+    return 0;
+}
+
+
+
 //simplementação do Bubble Sort
 //recebe: array, tamanho do array, ponteiros para contadores de comparações e trocas
 void bubble_sort (int arr[], int n, int *comparisons, int *swaps){
@@ -22,6 +36,7 @@ void bubble_sort (int arr[], int n, int *comparisons, int *swaps){
         }
     }
 }
+
 //gera diferentes tipos de dados para teste
 //recebe: array vazio, tamanho, e tipo de dados desejado
 void generate_data(int arr[], int size, const char* data_type) {
@@ -48,10 +63,11 @@ void generate_data(int arr[], int size, const char* data_type) {
         }
     }
 }
+
 //função que testa o Bubble Sort com diferentes configurações
 void test_bubble_sort(){
     //tamanhos de arrays para teste
-    int sizes[] = {1000, 10000, 100000};
+    int sizes[] = {1000, 10000, 100000, 1000000};
     // Tipos de dados para teste
     const char* data_types[] = {"sorted", "reverse-_sorted", "random", "many_duplicates"};
 
@@ -86,10 +102,4 @@ void test_bubble_sort(){
             free(arr);//libera memória alocada
         }
     }
-}
-
-int main(){
-    srand(time(0));
-    test_bubble_sort();
-    return 0;
 }
