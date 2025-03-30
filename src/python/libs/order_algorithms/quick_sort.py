@@ -113,6 +113,29 @@ class QuickSort(ListCreator):
 
         return l
 
+    @benchmark
+    def qsortBenchmark(self, metrics: BenchMetrics) -> BenchMetrics:
+        """
+        Will sort all number in the list with quick sort algorithm
+
+        Args:
+            metrics (required): Metrics wich will be used to storage data
+
+        Returns: 
+            BenchMetrics: All metrics updated
+        """
+        if len(self.numbers_list) == 0:
+            logging.warning("Lista de números está vazia. Impossível ordenar")
+            metrics.label = "Erro: Lista Vazia"
+            metrics.execution_time = 0
+            metrics.memory_usage = (0, 0)
+            metrics.steps = -1
+            return metrics
+        
+        sorted(self.numbers_list)
+        metrics.steps = -1 # to calculate steps
+        return metrics
+
 
 if __name__ == "__main__":
     
