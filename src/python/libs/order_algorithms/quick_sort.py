@@ -61,6 +61,17 @@ class QuickSort(ListCreator):
             self.quickSort(numbers_list=numbers_list, left=partition_pos + 1, right=right)
 
     def partition(self, numbers_list: list[int], left: int, right: int) -> int:
+        """
+        Sort partition of quicksort
+
+        Args:
+            numbers_list (required): List wich will be sorted
+            left (required): Left index of the list
+            right (required): Right index of the list
+
+        Returns: 
+            int: Returns left index in last position of partition
+        """
         l: int = left
         r: int = right
         pivot: int = numbers_list[right]
