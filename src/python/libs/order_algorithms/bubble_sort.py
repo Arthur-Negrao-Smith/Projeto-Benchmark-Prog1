@@ -17,9 +17,10 @@ import logging
 class BubbleSort(ListCreator):
     def __init__(self) -> None:
         super().__init__()
+        self.steps = 0 # Steps counter
 
     @benchmark
-    def sort(self, metrics: BenchMetrics) -> BenchMetrics:
+    def benchmarkSort(self, metrics: BenchMetrics) -> BenchMetrics:
         """
         Will sort all number in the list with bubble sort algorithm
 
@@ -35,15 +36,23 @@ class BubbleSort(ListCreator):
             metrics.label="Erro"
             return metrics
         
-        counter: int = 0 # Counter to count steps
+        self.bubbleSort()
+        metrics.steps = self.steps # Update steps on metrics
+        return metrics
+
+    def bubbleSort(self) -> None:
+        """
+        Bubble sort algorithm
+        """
+
         sorted: bool = False
         list_size: int = len(self.numbers_list)
-
+        
         while not sorted:
             
             for n in range(list_size):
                    
-                counter += 1 # Update steps
+                self.steps += 1 # Update steps
 
                 # If n is index of the last element
                 if  n == list_size - 1:
@@ -65,9 +74,6 @@ class BubbleSort(ListCreator):
                 else:
                     logging.warning("Comportamento inesperado no Bubble sort")
                
-        metrics.steps = counter # Update steps on metrics
-        return metrics
-    
 
 if __name__ == "__main__":
     
@@ -80,6 +86,6 @@ if __name__ == "__main__":
     metrics: BenchMetrics = BenchMetrics()
     metrics.label = "Teste"
     metrics.steps = 0
-    metrics = bubble.sort(metrics)
+    metrics = bubble.benchmarkSort(metrics)
     bubble.print_list()
     print(f"\nLabel: {metrics.label}, Steps: {metrics.steps}, Memory: {metrics.memory_usage}, Execution time: {metrics.execution_time}")

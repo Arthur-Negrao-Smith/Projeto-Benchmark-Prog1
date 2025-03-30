@@ -20,7 +20,7 @@ class MergeSort(ListCreator):
         self.steps: int = 0 # to calculate steps
 
     @benchmark
-    def sort(self, metrics: BenchMetrics) -> BenchMetrics:
+    def benchmarkSort(self, metrics: BenchMetrics) -> BenchMetrics:
         """
         Will sort all number in the list with merge sort algorithm
 
@@ -36,12 +36,12 @@ class MergeSort(ListCreator):
             metrics.label="Erro"
             return metrics
         
-        self.merge(self.numbers_list)
+        self.mergeSort(self.numbers_list)
         metrics.steps = self.steps # to calculate steps
         return metrics
                
 
-    def merge(self, numbers_list: list[int]) -> None:
+    def mergeSort(self, numbers_list: list[int]) -> None:
         """
         Merge sort recursive algorithm
 
@@ -54,8 +54,8 @@ class MergeSort(ListCreator):
             right_list: list[int] = numbers_list[len(numbers_list)//2:]
 
             # Recursion
-            self.merge(left_list)
-            self.merge(right_list)
+            self.mergeSort(left_list)
+            self.mergeSort(right_list)
         
             l: int = 0 # Left list index
             r: int = 0 # Right list index
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     metrics: BenchMetrics = BenchMetrics()
     metrics.label = "Teste"
     metrics.steps = 0
-    metrics = merge.sort(metrics)
+    metrics = merge.benchmarkSort(metrics)
     merge.print_list()
     print(f"\nLabel: {metrics.label}, Steps: {metrics.steps}, Memory: {metrics.memory_usage}, Execution time: {metrics.execution_time}")
     
