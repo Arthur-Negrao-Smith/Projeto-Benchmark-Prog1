@@ -33,7 +33,10 @@ class MergeSort(ListCreator):
         
         if len(self.numbers_list) == 0:
             logging.warning("Lista de números está vazia. Impossível ordenar")
-            metrics.label="Erro"
+            metrics.label = "Erro: Lista Vazia"
+            metrics.execution_time = 0
+            metrics.memory_usage = (0, 0)
+            metrics.steps = 0
             return metrics
         
         self.mergeSort(self.numbers_list)

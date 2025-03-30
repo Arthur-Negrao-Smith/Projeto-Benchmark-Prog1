@@ -33,7 +33,10 @@ class QuickSort(ListCreator):
         
         if len(self.numbers_list) == 0:
             logging.warning("Lista de números está vazia. Impossível ordenar")
-            metrics.label="Erro"
+            metrics.label = "Erro: Lista Vazia"
+            metrics.execution_time = 0
+            metrics.memory_usage = (0, 0)
+            metrics.steps = 0
             return metrics
         
         self.quickSort(self.numbers_list, 0, len(self.numbers_list) - 1)
@@ -55,8 +58,18 @@ class QuickSort(ListCreator):
         return
     
     def quickSort(self, numbers_list: list[int], left: int, right: int) -> None:
+        """
+        Quick sort recursive algorithm
+
+        Args:
+            numbers_list (required): List wich will be sorted
+            left (required): Left index of the list
+            right (required): Right index of the list
+        """
+
         if left < right:
-            partition_pos: int = self.partition(numbers_list=numbers_list, left=left, right=right)
+            partition_pos: int = self.partition(numbers_list=numbers_list, left=left, right=right) # middle position
+            # Recursion of the quick sort
             self.quickSort(numbers_list=numbers_list, left=left, right=partition_pos - 1)
             self.quickSort(numbers_list=numbers_list, left=partition_pos + 1, right=right)
 
@@ -78,18 +91,22 @@ class QuickSort(ListCreator):
 
         while l < r:
 
+            # If left index is less than right index and left element is less than pivot
             while l < right and numbers_list[l] < pivot:
                 l += 1
                 self.steps += 1
 
+            # If right index is greater than left index and right element is greater than pivot
             while r > left and numbers_list[r] >= pivot:
                 r -= 1
                 self.steps += 1
 
+            # If left index is less than right index, then swap them
             if l < r:
                 self.swap(numbers_list=numbers_list, a_index=l, b_index=r)
                 self.steps += 1
 
+        # If l element is grates than pivot, then swap then
         if numbers_list[l] > pivot:
             self.swap(numbers_list=numbers_list, a_index=l, b_index=right)
             self.steps += 1
