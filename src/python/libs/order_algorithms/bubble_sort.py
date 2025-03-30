@@ -48,10 +48,10 @@ class BubbleSort(ListCreator):
         Bubble sort algorithm
         """
 
-        sorted: bool = False
+        is_sorted: bool = False
         list_size: int = len(self.numbers_list)
         
-        while not sorted:
+        while not is_sorted:
             
             for n in range(list_size):
                    
@@ -59,7 +59,7 @@ class BubbleSort(ListCreator):
 
                 # If n is index of the last element
                 if  n == list_size - 1:
-                    sorted = True
+                    is_sorted = True
                     break
                 
                 # Swap values
