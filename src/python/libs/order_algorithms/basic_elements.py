@@ -43,11 +43,12 @@ class ListCreator:
         """
         print("\n[ " , end="")
         for c, number in enumerate(self.numbers_list):
-            if c % 20 != 0 or c == 0:
+            if ((c % 20!= 0) and c < len(self.numbers_list) - 1) or c == 0:
                 print(f"{number}, ", end="")
-            else:
+            elif c < len(self.numbers_list) - 1:
                 print(f"\n{number}, ", end="")
-        print("]")
+            else:
+                print(f"{number} ]")
 
 # Tests
 if __name__ == "__main__":
