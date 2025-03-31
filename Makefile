@@ -90,6 +90,7 @@ else
 endif
 
 
+# Makefile documentation
 help:
 	@echo =================================================== Docs ===================================================
 	@echo Commands:
@@ -104,7 +105,7 @@ help:
 	@echo.
 	@echo - make run                  Will run the main on both systems
 	@echo.
-	@echo - make clean                Will clean all src/C/object.o files and all src/C/bin.o files on both systems
+	@echo - make clean                Will clean all src/C/obj files and all src/C/bin files on both systems
 	@echo.
 	@echo - make libed                Compile libs to Linux systems
 	@echo.
@@ -119,10 +120,11 @@ help:
 	@echo - Arthur Negrão
 	@echo - Francisco Braga
 	@echo.
-	@echo Github of the project:
+	@echo Project's Github:
 	@echo.
 	@echo - https://github.com/Arthur-Negrao-Smith/Projeto-Benchmark-Prog1.git
 	@echo ============================================================================================================
 
 
+# Makefile documentation
 docs: help
