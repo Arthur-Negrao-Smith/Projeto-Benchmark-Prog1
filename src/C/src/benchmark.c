@@ -16,6 +16,17 @@ void generate_data(int arr[], int size, const char* data_type) {
     }
 }
 
+BenchMetrics *create_BenchMetrics(char label[MAX_STRING_SIZE])
+{
+    BenchMetrics *metrics = (BenchMetrics*) malloc(sizeof(BenchMetrics));
+    metrics->steps = 0;
+    metrics->memory_usage = 0;
+    metrics->execution_time = 0;
+    strcpy(metrics->label, label);
+
+    return metrics;
+}
+
 // Will write BenchMetrics in csv file
 short int write_to_csv(FILE *file, BenchMetrics *metrics) {
     fprintf(file, "%s,%lf,%lld,%lld\n", metrics->label, metrics->execution_time, metrics->memory_usage, metrics->steps);
