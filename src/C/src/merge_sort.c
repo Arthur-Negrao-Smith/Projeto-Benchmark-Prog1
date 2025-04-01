@@ -1,22 +1,9 @@
+#include "benchmark.h"
+#include "merge_sort.h"
 #include <stdio.h>   // Para funções de entrada/saída (printf, etc.)
 #include <stdlib.h>  // Para alocação de memória (malloc, free) e rand()
 #include <time.h>    // Para medir tempo de execução (clock()) e gerar números aleatórios (time())
 #include <string.h>  // Para comparar strings (strcmp())
-
-void merge(int arr[], int l, int m, int r, int *comparisons, int *swaps);
-void merge_sort_helper(int arr[], int l, int r, int *comparisons, int *swaps);
-void merge_sort(int arr[], int n, int *comparisons, int *swaps);
-void generate_data(int arr[], int size, const char* data_type);
-void test_merge_sort();
-
-
-
-int main() {
-    srand(time(0));//inicializa a semente para números aleatórios
-    test_merge_sort();//executa os testes
-    return 0;//retorna 0 indicando sucesso
-}
-
 
 
 
@@ -28,7 +15,7 @@ int main() {
    -r: Índice final do subarray direito
    -comparisons: Ponteiro para contador de comparações
    -swaps: ponteiro para contador de trocas*/
-void merge(int arr[], int l, int m, int r, int *comparisons, int *swaps) {
+void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
     int i, j, k;
     int n1 = m - l + 1;  //tamanho do subarray esquerdo
     int n2 = r - m;//tamanho do subarray direito
@@ -48,14 +35,14 @@ void merge(int arr[], int l, int m, int r, int *comparisons, int *swaps) {
     k = l;  //indice inicial do array combinado
     
     while (i < n1 && j < n2) {
-        (*comparisons)++;  //incrementa o contador de comparações
+        (metrics->comparations)++;  //incrementa o contador de comparações
         if (L[i] <= R[j]) {
             arr[k] = L[i];
             i++;
         } else {
             arr[k] = R[j];
             j++;
-            (*swaps)++;//incrementa o contador de trocas
+            (metrics->swaps)++;//incrementa o contador de trocas
         }
         k++;
     }
@@ -75,6 +62,7 @@ void merge(int arr[], int l, int m, int r, int *comparisons, int *swaps) {
     }
 }
 
+
 /*função auxiliar recursiva que implementa o Merge Sort
    parâmetros:
    -arr[]: Array a ser ordenado
@@ -82,100 +70,82 @@ void merge(int arr[], int l, int m, int r, int *comparisons, int *swaps) {
    -r: Índice final
    -comparisons: Ponteiro para contador de comparações
    -swaps: Ponteiro para contador de trocas*/
-void merge_sort_helper(int arr[], int l, int r, int *comparisons, int *swaps) {
+void merge_sort_helper(long int arr[], int l, int r, BenchMetrics *metrics) {
     if (l < r) {
         //encontra o ponto médio para dividir o array
         int m = l + (r - l) / 2;
         
         //ordena primeira e segunda metades
-        merge_sort_helper(arr, l, m, comparisons, swaps);
-        merge_sort_helper(arr, m + 1, r, comparisons, swaps);
+        merge_sort_helper(arr, l, m, metrics);
+        merge_sort_helper(arr, m + 1, r, metrics);
         
         //combina as metades ordenadas
-        merge(arr, l, m, r, comparisons, swaps);
+        merge(arr, l, m, r, metrics);
     }
 }
+
 
 /*função principal do Merge Sort que inicia o processo de ordenação
    parametros:
    -arr[]: Array a ser ordenado
    -n: Tamanho do array
-   -comparisons: Ponteiro para contador de comparações
-   -swaps: Ponteiro para contador de trocas*/
-void merge_sort(int arr[], int n, int *comparisons, int *swaps) {
-    *comparisons = 0;  //inicializa contador de comparações
-    *swaps = 0;//inicializa contador de trocas
-    merge_sort_helper(arr, 0, n - 1, comparisons, swaps);  //chama a função auxiliar
+   -*metrics: BenchMetrics to storage data
+*/
+void merge_sort(long int arr[], long int n, BenchMetrics *metrics) {
+    merge_sort_helper(arr, 0, n - 1, metrics);  //chama a função auxiliar
 }
 
-/*gera diferentes tipos de dados para teste
-   Parâmetros:
-   -arr[]: Array a ser preenchido
-   -size: Tamanho do array
-   -data_type: Tipo de dados a ser gerado*/
-void generate_data(int arr[], int size, const char* data_type) {
-    if (strcmp(data_type, "sorted") == 0) {
-        //array já ordenado
-        for (int i = 0; i < size; i++) {
-            arr[i] = i;
-        }
-    } else if (strcmp(data_type, "reverse_sorted") == 0) {
-        //array em ordem decrescente (pior caso para alguns algoritmos)
-        for (int i = 0; i < size; i++) {
-            arr[i] = size - i; //correção: alterado de size-1 para size-i
-        }
-    } else if (strcmp(data_type, "random") == 0) {
-        //array com valores aleatórios
-        for (int i = 0; i < size; i++) {
-            arr[i] = rand() % size;  //gera números entre 0 e size-1
-        }
-    } else if (strcmp(data_type, "many_duplicates") == 0) {
-        //array com muitos valores repetidos
-        for (int i = 0; i < size; i++) {
-            arr[i] = rand() % (size / 10);//gera números entre 0 e size/10
-        }
-    }
-}
 
 /*função que testa o Merge Sort com diferentes configurações*/
-void test_merge_sort() {
+BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSSIBLES]) {
     //tamanhos de arrays para teste
-    int sizes[] = {1000, 10000, 100000, 1000000};
+    int sizes[] = {FIRST_SIZE, SECOND_SIZE, THIRD_SIZE, FOURTH_SIZE};
     //tipos de dados para teste
-    const char* data_types[] = {"sorted", "reverse_sorted", "random", "many_duplicates"};
+    const char* data_types[] = {FIRST_ORDER, SECOND_ORDER, THIRD_ORDER, FOURTH_ORDER};
     
     //calcula quantos tamanhos e tipos de dados existem
     int num_sizes = sizeof(sizes)/sizeof(sizes[0]);
     int num_types = sizeof(data_types)/sizeof(data_types[0]);
 
     //cabeçalho dos resultados
-    printf("Teste de Performance do Merge Sort\n");
-    printf("Tamanho\tTipo de Dados\t\tTempo (s)\tComparações\tTrocas\n");
-    printf("------------------------------------------------------------\n");
+    printf("Bubble Sort Performance Test\n");
+    printf("Size\tData Type\t\tTime (s)\tComparations\t\tSwaps\n");
+    printf("---------------------------------------------------------------------------------------\n");
+
+    short int counter = 0;
 
     //testa para cada combinação de tamanho e tipo de dados
     for (int i = 0; i < num_sizes; i++) {
         for (int j = 0; j < num_types; j++) {
-            int size = sizes[i];
+            long int size = sizes[i];
             //aloca memória para o array
-            int* arr = (int*)malloc(size * sizeof(int));
+            long int* arr = (long int*)malloc(size * sizeof(long int));
             
             //gera dados conforme o tipo atual
             generate_data(arr, size, data_types[j]);
 
-            int comparisons, swaps;// Variáveis para armazenar as métricas
+
+            char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = MERGE_NAME;
+            char data_type[MAX_DATA_TYPE_SIZE];
+            strncpy(data_type, data_types[j], MAX_DATA_TYPE_SIZE);
+            data_type[MAX_DATA_TYPE_SIZE-1] = '\0';
+            BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
+
             clock_t start = clock();//marca o tempo inicial
-            merge_sort(arr, size, &comparisons, &swaps);//executa a ordenação
+            merge_sort(arr, size, metrics);//executa a ordenação
             clock_t end = clock();   //marca o tempo final
             
             //calcula o tempo decorrido em segundos
-            double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+            metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-            //imprime os resultados formatados
-            printf("%d\t%-16s\t%.6f\t%d\t\t%d\n", 
-                   size, data_types[j], time_taken, comparisons, swaps);
+            //imprime resultados formatados
+            printf("%ld\t%-16s\t%.6f\t  %lld\t\t%lld\n",
+            size, data_types[j], metrics->execution_time, metrics->comparations, metrics->swaps);
 
-            free(arr);//libera a memória alocada para o array
+            free(arr);
+            benchmetrics_array[counter] = metrics;
+            counter++;
         }
     }
+    return benchmetrics_array;
 }

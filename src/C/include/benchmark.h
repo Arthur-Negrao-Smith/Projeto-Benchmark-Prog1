@@ -11,9 +11,9 @@
 
     // Size numbers
     #define FIRST_SIZE                 1000
-    #define SECOND_SIZE                1000
-    #define THIRD_SIZE                 1000
-    #define FOURTH_SIZE                1000
+    #define SECOND_SIZE                10000
+    #define THIRD_SIZE                 100000
+    #define FOURTH_SIZE                1000000
 
     // Data Orders
     #define FIRST_ORDER                 "sorted"
