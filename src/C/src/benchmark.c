@@ -23,6 +23,7 @@ BenchMetrics *create_BenchMetrics(char label[MAX_STRING_SIZE])
     metrics->memory_usage = 0;
     metrics->execution_time = 0;
     strcpy(metrics->label, label);
+    metrics->label[49] = '\0';
 
     return metrics;
 }
@@ -33,10 +34,10 @@ short int write_to_csv(FILE *file, BenchMetrics *metrics) {
     return 0;
 }
 
-void test_sort_algorithm(void (*sort_func)(int[], int, int*, int*), 
+void test_sort_algorithm(void (*sort_func)(long int*, long int, BenchMetrics*), 
                         const char *algorithm_name,
-                        int sizes[], int num_sizes, 
-                        const char *data_types[], int num_types) {
+                        long int sizes[], int num_sizes, 
+                        const char *data_types[], long int num_types) {
     
     FILE *csv_file = fopen("../results/benchmark_c.csv", "a");
     if (!csv_file) {
@@ -46,30 +47,29 @@ void test_sort_algorithm(void (*sort_func)(int[], int, int*, int*),
     
     for (int i = 0; i < num_sizes; i++) {
         for (int j = 0; j < num_types; j++) {
-            int size = sizes[i];
-            int* arr = (int*)malloc(size * sizeof(int));
+            long int size = sizes[i];
+            long int* arr = (long int*)malloc(size * sizeof(long int));
             if (!arr) {
-                printf("Falha ao alocar memória para size=%d\n", size);
+                printf("Falha ao alocar memória para size=%ld\n", size);
                 continue;
             }
             
             generate_data(arr, size, data_types[j]);
 
-            int comparisons, swaps;
+            char label[MAX_STRING_SIZE] = "Test Sort Algorithm";
+            BenchMetrics *metrics = create_BenchMetrics(label);
             clock_t start = clock();
-            sort_func(arr, size, &comparisons, &swaps);
+            sort_func(arr, size, metrics);
             clock_t end = clock();
             
-            BenchMetrics *metrics;
-            
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
-            metrics->steps = comparisons + swaps;
             strcpy(metrics->label, algorithm_name);
             metrics->memory_usage = 0;
             
             write_to_csv(csv_file, metrics);
 
             free(arr);
+            free(metrics);
         }
     }
     fclose(csv_file);

@@ -4,7 +4,8 @@
 
 int main()
 {
-    BenchMetrics *metrics = create_BenchMetrics("Teste 1");
+    char label[MAX_STRING_SIZE] = "Teste de BenchMetrics";
+    BenchMetrics *metrics = create_BenchMetrics(label);
     printf("%s", metrics->label);
 
     // Tests
