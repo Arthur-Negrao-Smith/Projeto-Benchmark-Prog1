@@ -26,6 +26,9 @@
     #define MERGE_NAME                  "merge"
     #define QUICK_NAME                  "quick"
 
+    // Path to results
+    #define RESULTS_PATH                "..\\..\\results\\benchmark_c.csv"
+
 
 
     /// @brief Struct to storage BenchMark metrics

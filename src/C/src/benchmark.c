@@ -5,13 +5,13 @@
 
 // Will generate data to all array
 void generate_data(long int arr[], long int size, const char* data_type) {
-    if (strcmp(data_type, "sorted") == 0) {
+    if (strcmp(data_type, FIRST_ORDER) == 0) {
         for (int i = 0; i < size; i++) arr[i] = i;
-    } else if (strcmp(data_type, "reverse_sorted") == 0) {
+    } else if (strcmp(data_type, SECOND_ORDER) == 0) {
         for (int i = 0; i < size; i++) arr[i] = size - i;
-    } else if (strcmp(data_type, "random") == 0) {
+    } else if (strcmp(data_type, THIRD_ORDER) == 0) {
         for (int i = 0; i < size; i++) arr[i] = rand() % size;
-    } else if (strcmp(data_type, "many_duplicates") == 0) {
+    } else if (strcmp(data_type, FOURTH_ORDER) == 0) {
         for (int i = 0; i < size; i++) arr[i] = rand() % (size/10);
     }
 }
@@ -59,7 +59,7 @@ void test_sort_algorithm(void (*sort_func)(long int*, long int, BenchMetrics*),
                         long int sizes[], int num_sizes, 
                         const char *data_types[], long int num_types) {
     
-    FILE *csv_file = fopen("../results/benchmark_c.csv", "a");
+    FILE *csv_file = fopen(RESULTS_PATH, "a");
     if (!csv_file) {
         printf("Erro ao abrir o arquivo CSV!\n");
         return;
