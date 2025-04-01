@@ -8,16 +8,16 @@ endif
 
 # Defining the dir paths to both systems
 ifeq ($(SYS),LINUX)
-	BIN = ./src/c/bin
-	INCLUDE = ./src/c/include
-	OBJ = ./src/c/obj
-	SRC = ./src/c/src
+	BIN = ./src/C/bin
+	INCLUDE = ./src/C/include
+	OBJ = ./src/C/obj
+	SRC = ./src/C/src
 	RUN = $(BIN)/main
 else
-	BIN = .\src\c\bin
-	INCLUDE = .\src\c\include
-	OBJ = .\src\c\obj
-	SRC = .\src\c\src
+	BIN = .\src\C\bin
+	INCLUDE = .\src\C\include
+	OBJ = .\src\C\obj
+	SRC = .\src\C\src
 	RUN = $(BIN)\\main.exe
 
 endif
@@ -57,7 +57,7 @@ linux: libed
 
 # Generic flag to object.o files linux
 $(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h
-	$(C_COMP) -c $< -I $(INCLUDE) -o $(OBJ)/$@
+	$(C_COMP) -c $< -I $(INCLUDE) -o $@
 
 
 # Generic flag to object.o files windows
