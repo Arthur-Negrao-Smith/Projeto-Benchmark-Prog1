@@ -86,7 +86,7 @@ run:
 clean:
 ifeq ($(SYS),LINUX)
 	rm -rf $(OBJ)/*.o
-	find $(SRC)/* -type f ! -name ".gitkeep" -delete
+	find $(BIN)/* -type f ! -name ".gitkeep" -delete
 else
 	del /Q /F $(OBJ)\\*.o $(BIN)\\*.exe
 endif
