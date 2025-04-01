@@ -13,12 +13,14 @@ ifeq ($(SYS),LINUX)
 	OBJ = ./src/C/obj
 	SRC = ./src/C/src
 	RUN = $(BIN)/main
+	DOT = ""
 else
 	BIN = .\src\C\bin
 	INCLUDE = .\src\C\include
 	OBJ = .\src\C\obj
 	SRC = .\src\C\src
 	RUN = $(BIN)\\main.exe
+	DOT = .
 
 endif
 
@@ -82,7 +84,7 @@ run:
 
 # Clean all object files and bin files
 clean:
-ifeq ($SYS,LINUX)
+ifeq ($(SYS),LINUX)
 	rm -rf $(OBJ)/*.o
 	find $(SRC)/* -type f ! -name ".gitkeep" -delete
 else
@@ -94,34 +96,34 @@ endif
 help:
 	@echo =================================================== Docs ===================================================
 	@echo Commands:
-	@echo.
+	@echo$(DOT)
 	@echo - make                      Compile all project to Linux systems
-	@echo.
+	@echo$(DOT)
 	@echo - make all                  Compile all project to Linux systems
-	@echo.
+	@echo$(DOT)
 	@echo - make linux                Compile all project to Linux systems
-	@echo.
+	@echo$(DOT)
 	@echo - make windows              Compile all project to Windows system
-	@echo.
+	@echo$(DOT)
 	@echo - make run                  Will run the main on both systems
-	@echo.
+	@echo$(DOT)
 	@echo - make clean                Will clean all src/C/obj files and all src/C/bin files on both systems
-	@echo.
+	@echo$(DOT)
 	@echo - make libed                Compile libs to Linux systems
-	@echo.
+	@echo$(DOT)
 	@echo - make libed_windows        Compile libs to Windows system
-	@echo.
+	@echo$(DOT)
 	@echo - make help                 Show the help guide
-	@echo.
+	@echo$(DOT)
 	@echo - make docs                 Show the help guide
-	@echo.
+	@echo$(DOT)
 	@echo Autors:
-	@echo.
+	@echo$(DOT)
 	@echo - Arthur Negrão
 	@echo - Francisco Braga
-	@echo.
-	@echo Project's Github:
-	@echo.
+	@echo$(DOT)
+	@echo Github repository of the project:
+	@echo$(DOT)
 	@echo - https://github.com/Arthur-Negrao-Smith/Projeto-Benchmark-Prog1.git
 	@echo ============================================================================================================
 
