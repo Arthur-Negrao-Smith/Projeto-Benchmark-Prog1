@@ -56,7 +56,7 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
             //gera dados conforme o tipo atual
             generate_data(arr, size, data_types[j]);
 
-            char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = "bubble_sort";
+            char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = BUBBLE_NAME;
             char data_type[MAX_DATA_TYPE_SIZE];
             strncpy(data_type, data_types[j], MAX_DATA_TYPE_SIZE);
             data_type[MAX_DATA_TYPE_SIZE-1] = '\0';

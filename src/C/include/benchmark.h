@@ -21,6 +21,11 @@
     #define THIRD_ORDER                 "random"
     #define FOURTH_ORDER                "many_duplicates"
 
+    // Algorithm's name
+    #define BUBBLE_NAME                 "bubble"
+    #define MERGE_NAME                  "merge"
+    #define QUICK_NAME                  "quick"
+
 
 
     /// @brief Struct to storage BenchMark metrics
