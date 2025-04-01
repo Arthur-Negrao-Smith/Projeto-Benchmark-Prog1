@@ -12,13 +12,13 @@ void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
     for (int i = 0; i < array_size -1; i++) {
         //loop interno: compara elementos adjacentes
         for (int j = 0; j < array_size -i -1; j++) {
-            (metrics->steps)++; //incrementa contador de comparações
+            (metrics->comparations)++; //incrementa contador de comparações
             //se o elemento atual for maior que o próximo, troca eles
             if (arr[j]>arr[j+1]) {
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
-                (metrics->steps)++; //incrementa contador de trocas
+                (metrics->swaps)++; //incrementa contador de trocas
             }
         }
     }
@@ -39,8 +39,8 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
 
     //cabeçalho dos resultados
     printf("Bubble Sort Performance Test\n");
-    printf("Size\tData Type\t\tTime (s)\tSteps\n");
-    printf("--------------------------------------------------------------\n");
+    printf("Size\tData Type\t\tTime (s)\tComparations\t\tSwaps\n");
+    printf("---------------------------------------------------------------------------------------\n");
 
     // Counter
     short int counter = 0;
@@ -68,8 +68,8 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC; //calcula tempo decorrido em segundos
             
             //imprime resultados formatados
-            printf("%ld\t%-16s\t%.6f\t%lld\n",
-            size, data_types[j], metrics->execution_time, metrics->steps);
+            printf("%ld\t%-16s\t%.6f\t  %lld\t\t%lld\n",
+            size, data_types[j], metrics->execution_time, metrics->comparations, metrics->swaps);
 
             //libera memória alocada
             free(arr);

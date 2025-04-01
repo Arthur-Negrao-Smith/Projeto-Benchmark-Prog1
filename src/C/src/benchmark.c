@@ -23,7 +23,8 @@ BenchMetrics *create_BenchMetrics(char algorithm_name[MAX_ALGORITHM_NAME_SIZE], 
     if (metrics)
     {
         metrics->array_size = array_size;
-        metrics->steps = 0;
+        metrics->comparations = 0;
+        metrics->swaps = 0;
         metrics->memory_usage = 0;
         metrics->execution_time = 0;
 
@@ -49,7 +50,7 @@ void free_BenchMetrics_array(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSS
 
 // Will write BenchMetrics in csv file
 short int write_to_csv(FILE *file, BenchMetrics *metrics) {
-    fprintf_s(file, "%s,%s,%ld,%lf,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->steps);
+    fprintf_s(file, "%s,%s,%ld,%lf,%lld,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->comparations, metrics->swaps);
     return 0;
 }
 
