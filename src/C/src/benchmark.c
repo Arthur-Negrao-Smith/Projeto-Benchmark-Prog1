@@ -20,22 +20,36 @@ BenchMetrics *create_BenchMetrics(char algorithm_name[MAX_ALGORITHM_NAME_SIZE], 
 {
     BenchMetrics *metrics = (BenchMetrics*) malloc(sizeof(BenchMetrics));
 
-    metrics->array_size = array_size;
-    metrics->steps = 0;
-    metrics->memory_usage = 0;
-    metrics->execution_time = 0;
+    if (metrics)
+    {
+        metrics->array_size = array_size;
+        metrics->steps = 0;
+        metrics->memory_usage = 0;
+        metrics->execution_time = 0;
 
-    strcpy(metrics->algorithm_name, algorithm_name);
-    metrics->algorithm_name[MAX_ALGORITHM_NAME_SIZE-1] = '\0';
-    strcpy(metrics->data_type, data_type);
-    metrics->algorithm_name[MAX_DATA_TYPE_SIZE-1] = '\0';
+        strncpy(metrics->algorithm_name, algorithm_name, MAX_ALGORITHM_NAME_SIZE);
+        metrics->algorithm_name[MAX_ALGORITHM_NAME_SIZE-1] = '\0';
+        strncpy(metrics->data_type, data_type, MAX_DATA_TYPE_SIZE);
+        metrics->data_type[MAX_DATA_TYPE_SIZE-1] = '\0';
+    }
 
     return metrics;
 }
 
+
+void free_BenchMetrics_array(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSSIBLES])
+{
+    for (int i = 0; i < TOTAL_METRICS_POSSIBLES; i++)
+    {
+        free(benchmetrics_array[i]);
+        benchmetrics_array[i] = NULL;
+    }
+}
+
+
 // Will write BenchMetrics in csv file
 short int write_to_csv(FILE *file, BenchMetrics *metrics) {
-    fprintf(file, "%s,%s,%ld,%lf,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->steps);
+    fprintf_s(file, "%s,%s,%ld,%lf,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->steps);
     return 0;
 }
 
@@ -62,9 +76,11 @@ void test_sort_algorithm(void (*sort_func)(long int*, long int, BenchMetrics*),
             generate_data(arr, size, data_types[j]);
 
             char algorithm_name_metrics[MAX_ALGORITHM_NAME_SIZE];
-            strcpy(algorithm_name_metrics, algorithm_name);
+            strncpy(algorithm_name_metrics, algorithm_name, MAX_ALGORITHM_NAME_SIZE);
+            algorithm_name_metrics[MAX_ALGORITHM_NAME_SIZE-1] = '\0';
             char data_type[MAX_DATA_TYPE_SIZE];
-            strcpy(data_type, data_types[j]);
+            strncpy(data_type, data_types[j], MAX_DATA_TYPE_SIZE);
+            data_type[MAX_DATA_TYPE_SIZE-1] = '\0';
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name_metrics, data_type, size);
 
             clock_t start = clock();
