@@ -4,6 +4,6 @@
     #include "benchmark.h"
 
     void bubble_sort(long int*, long int, BenchMetrics*);
-    void test_bubble_sort(void);
+    BenchMetrics **benchmark_bubble_sort(BenchMetrics*[TOTAL_METRICS_POSSIBLES]);
 
 #endif

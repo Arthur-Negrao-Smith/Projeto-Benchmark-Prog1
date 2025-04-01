@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 
 //simplementação do Bubble Sort
@@ -24,9 +25,11 @@ void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
 }
 
 //função que testa o Bubble Sort com diferentes configurações
-void test_bubble_sort(){
+BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSSIBLES]){
+
     //tamanhos de arrays para teste
-    long int sizes[] = {1000, 10000, 100000, 1000000};
+        long int sizes[] = {FIRST_SIZE, SECOND_SIZE, THIRD_SIZE, FOURTH_SIZE};
+
     // Tipos de dados para teste
     const char* data_types[] = {"sorted", "reverse_sorted", "random", "many_duplicates"};
 
@@ -43,13 +46,18 @@ void test_bubble_sort(){
     for (int i = 0; i < num_sizes; i++) {
         for (int j = 0; j < num_types; j++){
             long int size = sizes[i];
+
             //aloca memória para o array
             long int* arr = (long int*)malloc(size * sizeof(long int));
+
             //gera dados conforme o tipo atual
             generate_data(arr, size, data_types[j]);
 
-            char label[MAX_STRING_SIZE] = "Test Bubble Sort";
-            BenchMetrics *metrics = create_BenchMetrics(label); //variável para métricas
+            char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = "bubble_sort";
+            char data_type[MAX_DATA_TYPE_SIZE];
+            strcpy(data_type, data_types[j]);
+            BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
+
             clock_t start = clock(); //marca tempo inicial
             bubble_sort(arr, size, metrics); //executa ordenação
             clock_t end = clock(); //marca tempo final
@@ -61,7 +69,8 @@ void test_bubble_sort(){
 
             //libera memória alocada
             free(arr);
-            free(metrics);
+            benchmetrics_array[j] = metrics;
         }
     }
+    return benchmetrics_array;
 }
