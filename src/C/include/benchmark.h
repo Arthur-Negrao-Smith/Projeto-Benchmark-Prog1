@@ -15,6 +15,7 @@
     } BenchMetrics;
 
     BenchMetrics *create_BenchMetrics(char[MAX_STRING_SIZE]);
+    void generate_data(long int[], long int, const char*);
     short int write_to_csv(FILE*, BenchMetrics*);
     
 #endif // BENCHMARK_H

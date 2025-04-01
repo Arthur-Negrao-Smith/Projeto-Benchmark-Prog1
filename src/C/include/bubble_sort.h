@@ -3,7 +3,7 @@
 
     #include "benchmark.h"
 
-    bubble_sort (int*, long int, BenchMetrics*);
-    test_bubble_sort(void);
+    void bubble_sort(long int*, long int, BenchMetrics*);
+    void test_bubble_sort(void);
 
 #endif

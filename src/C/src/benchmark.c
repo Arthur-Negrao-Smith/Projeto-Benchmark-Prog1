@@ -4,7 +4,7 @@
 #include <time.h>
 
 // Will generate data to all array
-void generate_data(int arr[], int size, const char* data_type) {
+void generate_data(long int arr[], long int size, const char* data_type) {
     if (strcmp(data_type, "sorted") == 0) {
         for (int i = 0; i < size; i++) arr[i] = i;
     } else if (strcmp(data_type, "reverse_sorted") == 0) {

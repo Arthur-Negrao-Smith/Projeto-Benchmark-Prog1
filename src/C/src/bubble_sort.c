@@ -1,37 +1,27 @@
+#include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-void bubble_sort (int arr[], int n, int *comparisons, int *swaps);
-void generate_data(int arr[], int size, const char* data_type);
-void test_bubble_sort();
 
-
-
-int main(){
-    srand(time(0));
-    test_bubble_sort();
-    return 0;
-}
+//void generate_data(int arr[], int size, const char* data_type);
 
 
 
 //simplementação do Bubble Sort
 //recebe: array, tamanho do array, ponteiros para contadores de comparações e trocas
-void bubble_sort (int arr[], int n, int *comparisons, int *swaps){
-    *comparisons = 0;
-    *swaps = 0;
+void bubble_sort (long int arr*, long int array_size, BenchMetrics *metrics){
     //loop externo: passa por todos os elementos
-    for (int i = 0; i<n-1; i++) {
+    for (int i = 0; i < array_size -1; i++) {
         //loop interno: compara elementos adjacentes
-        for (int j = 0; j<n-i-1; j++) {
-            (*comparisons)++; //incrementa contador de comparações
+        for (int j = 0; j < array_size -i -1; j++) {
+            (metrics->steps)++; //incrementa contador de comparações
             //se o elemento atual for maior que o próximo, troca eles
             if (arr[j]>arr[j+1]) {
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
-                (*swaps)++; //incrementa contador de trocas
+                (metrics->steps)++; //incrementa contador de trocas
             }
         }
     }
@@ -39,6 +29,7 @@ void bubble_sort (int arr[], int n, int *comparisons, int *swaps){
 
 //gera diferentes tipos de dados para teste
 //recebe: array vazio, tamanho, e tipo de dados desejado
+/*
 void generate_data(int arr[], int size, const char* data_type) {
      //array já ordenado (melhor caso para Bubble Sort)
     if (strcmp(data_type, "sorted") == 0) {
@@ -63,6 +54,7 @@ void generate_data(int arr[], int size, const char* data_type) {
         }
     }
 }
+*/
 
 //função que testa o Bubble Sort com diferentes configurações
 void test_bubble_sort(){
@@ -82,24 +74,26 @@ void test_bubble_sort(){
 
     //testa para cada combinação de tamanho e tipo de dados
     for (int i = 0; i<num_sizes; i++) {
-        for (int j=0; j<num_types; j++){
+        for (int j = 0; j < num_types; j++){
             int size = sizes[i];
             //aloca memória para o array
             int* arr = (int*)malloc(size * sizeof(int));
             //gera dados conforme o tipo atual
             generate_data(arr, size, data_types[j]);
 
-            int comparisions, swaps;//variáveis para métricas
-            clock_t start = clock();//marca tempo inicial
-            bubble_sort(arr, size, &comparisions, &swaps);//executa ordenação
-            clock_t end = clock();//marca tempo final
-            double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;//calcula tempo decorrido em segundos
+            BenchMetrics *metrics = create_BenchMetrics("Test Bubble Sort"); //variável para métricas
+            clock_t start = clock(); //marca tempo inicial
+            bubble_sort(arr, size, metrics); //executa ordenação
+            clock_t end = clock(); //marca tempo final
+            metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC; //calcula tempo decorrido em segundos
             
             //imprime resultados formatados
-            printf("%d\t%-16s\t%.6f\t%d\n",
-            size, data_types[j], time_taken, comparisions, swaps);
+            printf("%d\t%-16s\t%.6f\t%lld\n",
+            size, data_types[j], metrics->execution_time, metrics->steps);
 
-            free(arr);//libera memória alocada
+            //libera memória alocada
+            free(arr);
+            free(metrics);
         }
     }
 }

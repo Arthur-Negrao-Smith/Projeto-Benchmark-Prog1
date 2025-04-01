@@ -49,7 +49,8 @@ all: linux
 
 # Compile libs linux
 libed:	\
-		$(OBJ)/benchmark.o
+		$(OBJ)/benchmark.o \
+		$(OBJ)/bubble_sort.o
 
 	
 # Compile to linux
@@ -70,6 +71,7 @@ $(OBJ)\\%.o: $(SRC)\\%.c $(INCLUDE)\\%.h
 # Compile libs Windows
 libed_windows:	\
 	$(OBJ)\\benchmark.o \
+	$(OBJ)\\bubble_sort.o
 
 
 # Compile to windows

@@ -1,10 +1,13 @@
 #include "benchmark.h"
+#include "bubble_sort.h"
 #include <stdio.h>
 
 int main()
 {
+    BenchMetrics *metrics = create_BenchMetrics("Teste 1");
+    printf("%s", metrics->label);
 
-    printf("Olá, mundo!");
-    
+    // Tests
+    test_bubble_sort();
     return 0;
 }
