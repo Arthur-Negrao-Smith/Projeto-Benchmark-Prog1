@@ -1,5 +1,9 @@
-#include "../include/benchmark.h"
+#include "benchmark.h"
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
+// Will generate data to all array
 void generate_data(int arr[], int size, const char* data_type) {
     if (strcmp(data_type, "sorted") == 0) {
         for (int i = 0; i < size; i++) arr[i] = i;
@@ -12,10 +16,10 @@ void generate_data(int arr[], int size, const char* data_type) {
     }
 }
 
-void write_to_csv(FILE *file, const char *algorithm, const char *data_type, 
-                 int size, double time_taken, long steps) {
-    fprintf(file, "%s_%s_%d,%.6f,%ld\n", 
-            algorithm, data_type, size, time_taken, steps);
+// Will write BenchMetrics in csv file
+short int write_to_csv(FILE *file, BenchMetrics *metrics) {
+    fprintf(file, "%s,%lf,%lld,%lld\n", metrics->label, metrics->execution_time, metrics->memory_usage, metrics->steps);
+    return 0;
 }
 
 void test_sort_algorithm(void (*sort_func)(int[], int, int*, int*), 
@@ -45,11 +49,14 @@ void test_sort_algorithm(void (*sort_func)(int[], int, int*, int*),
             sort_func(arr, size, &comparisons, &swaps);
             clock_t end = clock();
             
-            double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
-            long steps = comparisons + swaps;
-
-            write_to_csv(csv_file, algorithm_name, data_types[j], size, 
-                        time_taken, steps);
+            BenchMetrics *metrics;
+            
+            metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
+            metrics->steps = comparisons + swaps;
+            strcpy(metrics->label, algorithm_name);
+            metrics->memory_usage = 0;
+            
+            write_to_csv(csv_file, metrics);
 
             free(arr);
         }
