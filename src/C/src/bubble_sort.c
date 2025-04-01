@@ -31,7 +31,7 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
         long int sizes[] = {FIRST_SIZE, SECOND_SIZE, THIRD_SIZE, FOURTH_SIZE};
 
     // Tipos de dados para teste
-    const char* data_types[] = {"sorted", "reverse_sorted", "random", "many_duplicates"};
+    const char* data_types[] = {FIRST_ORDER, SECOND_ORDER, THIRD_ORDER, FOURTH_ORDER};
 
     //calcula quantos tamanhos e tipos existem
     int num_sizes = sizeof(sizes)/sizeof(sizes[0]);
@@ -41,6 +41,9 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
     printf("Bubble Sort Performance Test\n");
     printf("Size\tData Type\t\tTime (s)\tSteps\n");
     printf("--------------------------------------------------------------\n");
+
+    // Counter
+    short int counter = 0;
 
     //testa para cada combinação de tamanho e tipo de dados
     for (int i = 0; i < num_sizes; i++) {
@@ -55,7 +58,8 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
 
             char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = "bubble_sort";
             char data_type[MAX_DATA_TYPE_SIZE];
-            strcpy(data_type, data_types[j]);
+            strncpy(data_type, data_types[j], MAX_DATA_TYPE_SIZE);
+            data_type[MAX_DATA_TYPE_SIZE-1] = '\0';
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
 
             clock_t start = clock(); //marca tempo inicial
@@ -69,7 +73,8 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
 
             //libera memória alocada
             free(arr);
-            benchmetrics_array[j] = metrics;
+            benchmetrics_array[counter] = metrics;
+            counter++;
         }
     }
     return benchmetrics_array;
