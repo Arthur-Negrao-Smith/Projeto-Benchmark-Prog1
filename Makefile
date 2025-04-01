@@ -44,7 +44,9 @@ CFLAGS = -O2 -Wall -Wextra
 
 
 # Will compile to linux
-all: linux
+all: \
+	help \
+	linux
 
 
 # Compile libs linux
@@ -60,12 +62,12 @@ linux: libed
 
 # Generic flag to object.o files linux
 $(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h
-	$(C_COMP) -c $< -I $(INCLUDE) -o $@
+	$(C_COMP) -c $< -I $(INCLUDE) -o $@ $(CFLAGS)
 
 
 # Generic flag to object.o files windows
 $(OBJ)\\%.o: $(SRC)\\%.c $(INCLUDE)\\%.h
-	$(C_COMP) -c $< -I $(INCLUDE) -o $@
+	$(C_COMP) -c $< -I $(INCLUDE) -o $@ $(CFLAGS)
 
 
 # Compile libs Windows
@@ -99,9 +101,9 @@ help:
 	@echo =================================================== Docs ===================================================
 	@echo Commands:
 	@echo$(DOT)
-	@echo - make                      Compile all project to Linux systems
+	@echo - make                      Show the help guide and compile all project to Linux systems
 	@echo$(DOT)
-	@echo - make all                  Compile all project to Linux systems
+	@echo - make all                  Show the help guide and compile all project to Linux systems
 	@echo$(DOT)
 	@echo - make linux                Compile all project to Linux systems
 	@echo$(DOT)
