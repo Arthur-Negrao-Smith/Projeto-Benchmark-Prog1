@@ -1,1 +1,1 @@
-from .graphic_generator import GraphicData
+from .graphic_generator import GraphicData, GraphicGenerator

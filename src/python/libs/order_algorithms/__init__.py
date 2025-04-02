@@ -1,4 +1,4 @@
-from .basic_elements import ListCreator
-from . import bubble_sort
-from . import merge_sort
-from . import quick_sort
+from .basic_elements import ListCreator, update_python_path
+from .bubble_sort import BubbleSort
+from .merge_sort import MergeSort
+from .quick_sort import QuickSort
