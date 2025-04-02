@@ -1,8 +1,8 @@
 # Intern imports
 from .data import BenchMetrics
-from types import FunctionType
 
 # Extern imports
+from typing import FunctionType
 import logging
 from time import time
 import tracemalloc as tmc
