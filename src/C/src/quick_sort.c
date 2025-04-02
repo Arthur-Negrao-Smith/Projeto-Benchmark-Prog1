@@ -9,45 +9,38 @@
 
 /* Função de partição para o Quick Sort (esquema de Lomuto*/
 int partition(long int arr[], long int low, long int high, BenchMetrics *metrics) {
-    long int pivot = arr[high];//seleciona o último elemento como pivô
-    long int i = (low - 1);//indice do menor elemento
-
-    for (int j = low; j < high - 1; j++) {
-        (metrics->comparations)++;  //incrementa a cada comparação
-        //se elemento atual é menor que o pivô
-        if (arr[j] <= pivot) {
-            i++;//incrementa o índice do menor elemento
-            //troca arr[i] e arr[j]
-            long int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-            (metrics->swaps)++;//conta cada troca
+    long int pivot = arr[high]; //seleciona o último elemento como pivô
+    
+    while (low < high)
+    {
+        while (low < high && arr[low] <= pivot)
+        {
+            low++;
+            metrics->comparations++;
         }
-    }
-    //coloca o pivô na posição correta
-    long int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-    (metrics->swaps)++; //conta a troca do pivô
-    return (i + 1); //retorna a posição do pivô
-}
-
-/*Função recursiva auxiliar do Quick Sort*/
-void quick_sort_helper(long int arr[], long int low, long int high, BenchMetrics *metrics) {
-    if (low < high) {
-        //obtém o índice do pivô após a partição
-        long int pi = partition(arr, low, high, metrics);
         
-        //ordena recursivamente os elementos antes e depois do pivô
-        quick_sort_helper(arr, low, pi - 1, metrics);
-        quick_sort_helper(arr, pi + 1, high, metrics);
+        while (low < high && arr[high] > pivot)
+        {
+            high--;
+            metrics->comparations++;
+        }
+
+        swap(&arr[low], &arr[high]);
+        metrics->swaps++;
     }
+    return low;
 }
 
 /* Função principal do Quick Sort*/
-void quick_sort(long int arr[], long int n, BenchMetrics *metrics) {
-    quick_sort_helper(arr, 0, n - 1, metrics);  // Chama a função auxiliar
+void quick_sort(long int arr[], long int low, long int high, BenchMetrics *metrics) {
+    if (low < high)
+    {
+        int pos = partition(arr, low, high, metrics);
+        quick_sort(arr, low, pos - 1, metrics);
+        quick_sort(arr, pos, high, metrics);
+    }
 }
+
 
 /* Função que testa o Quick Sort com diferentes configurações */
 BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSSIBLES]) {
@@ -85,14 +78,13 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
 
             clock_t start = clock(); //marca o tempo inicial
-            quick_sort(arr, size, metrics); // Executa a ordenação
+            quick_sort(arr, 0, size-1, metrics); // Executa a ordenação
             clock_t end = clock();//marca o tempo final
             
             //calcula o tempo decorrido em segundos
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
             //imprime resultados formatados
-            //printf("O Valor do swap e: %lld, a ordem: %s\n", metrics->swaps, metrics->data_type);
             printf("%ld\t%-16s\t%.6f\t  %lld\t\t%lld\n",
             size, data_types[j], metrics->execution_time, metrics->comparations, metrics->swaps);
 
