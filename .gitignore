@@ -19,6 +19,7 @@
 *.o
 *.pytest_cache/
 .vscode
+*.csv
 
 # Ignore directories
 .venv/*

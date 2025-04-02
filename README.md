@@ -1,6 +1,6 @@
 # Projeto Final da Matéria de Programação de Computadores 1
 
-O projeto consiste em comparar a performance das linguagens de programação C e Python em algoritmos de ordenação, dentre os algoritmos estão: Bubble sort, Insertion sort, Merge sort, Quick sort. Utilizando de técnicas de benchmark, criaremos gráficos para demonstrar os resultados obtidos.
+O projeto consiste em comparar a performance das linguagens de programação C e Python em algoritmos de ordenação, dentre os algoritmos estão: Bubble sort, Merge sort, Quick sort. Utilizando de técnicas de benchmark, criaremos gráficos para demonstrar os resultados obtidos.
 
 ## Organização dos diretórios
 
@@ -8,7 +8,7 @@ Para manutenção da organização do projeto, foi decidido arbitrariamente a se
 
 ```
 src/    # Localização dos códigos do projeto
-├── c/          # Todo o projeto escrito em C
+├── C/          # Todo o projeto escrito em C
 │   ├── bin/            # Todos os binários compilados de C
 │   ├── include/        # Todos o arquivos de cabeçalho de C
 │   ├── obj/            # Todos os arquivos objeto (.o) de C
