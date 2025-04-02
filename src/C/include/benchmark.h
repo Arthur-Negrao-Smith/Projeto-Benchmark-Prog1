@@ -58,6 +58,12 @@
     /// @param data_type Initial data order
     void generate_data(long int[], long int, const char*);
 
+    /// @brief Will print all data in array
+    /// @param array Array with data
+    /// @param size Size of the array
+    /// @param items_per_line Number of items per line
+    void print_array(long int[], long int, int);
+
     /// @brief Will swap 2 elements
     /// @param a Pointer to long int
     /// @param b Pointer to long int

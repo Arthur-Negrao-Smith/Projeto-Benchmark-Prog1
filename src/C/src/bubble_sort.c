@@ -15,9 +15,7 @@ void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
             (metrics->comparations)++; //incrementa contador de comparações
             //se o elemento atual for maior que o próximo, troca eles
             if (arr[j]>arr[j+1]) {
-                int temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+                swap(&arr[j], &arr[j + 1]);
                 (metrics->swaps)++; //incrementa contador de trocas
             }
         }

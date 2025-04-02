@@ -25,6 +25,20 @@ void swap(long int *a, long int *b)
 }
 
 
+void print_array(long int array[], long int size, int items_per_line)
+{
+    printf("[ ");
+    for (int i = 0; i < size; i++)
+    {
+        if (i % 20 != items_per_line)
+            printf("%ld, ", array[i]);
+        else
+            printf("\n%ld, ", array[i]);
+    }
+    printf(" ]\n");
+}
+
+
 BenchMetrics *create_BenchMetrics(char algorithm_name[MAX_ALGORITHM_NAME_SIZE], char data_type[MAX_DATA_TYPE_SIZE], long int array_size)
 {
     BenchMetrics *metrics = (BenchMetrics*) malloc(sizeof(BenchMetrics));
