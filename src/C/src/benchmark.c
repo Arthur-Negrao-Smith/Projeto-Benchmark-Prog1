@@ -16,6 +16,15 @@ void generate_data(long int arr[], long int size, const char* data_type) {
     }
 }
 
+
+void swap(long int *a, long int *b)
+{
+    long int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+
 BenchMetrics *create_BenchMetrics(char algorithm_name[MAX_ALGORITHM_NAME_SIZE], char data_type[MAX_DATA_TYPE_SIZE], long int array_size)
 {
     BenchMetrics *metrics = (BenchMetrics*) malloc(sizeof(BenchMetrics));

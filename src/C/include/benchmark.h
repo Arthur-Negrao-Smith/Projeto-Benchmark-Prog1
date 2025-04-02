@@ -58,6 +58,11 @@
     /// @param data_type Initial data order
     void generate_data(long int[], long int, const char*);
 
+    /// @brief Will swap 2 elements
+    /// @param a Pointer to long int
+    /// @param b Pointer to long int
+    void swap(long int*, long int*);
+
     /// @brief Will save BenchMetrics in csv file
     /// @param  file File to write data
     /// @param  metrics Metrics to storage
