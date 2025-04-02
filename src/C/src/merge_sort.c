@@ -7,14 +7,15 @@
 
 
 
-/*função que combina dois subarrays ordenados em um único array ordenado
+/*
+função que combina dois subarrays ordenados em um único array ordenado
    parâmetros:
    -arr[]: Array principal que será ordenado
    -l: Índice inicial do subarray esquerdo
    -m: Índice do meio (fim do subarray esquerdo)
    -r: Índice final do subarray direito
-   -comparisons: Ponteiro para contador de comparações
-   -swaps: ponteiro para contador de trocas*/
+   -metrics: BenchMetrics to storage BenchMark data
+*/
 void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
     int i, j, k;
     int n1 = m - l + 1;  //tamanho do subarray esquerdo
@@ -63,13 +64,14 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
 }
 
 
-/*função auxiliar recursiva que implementa o Merge Sort
+/*
+função auxiliar recursiva que implementa o Merge Sort
    parâmetros:
    -arr[]: Array a ser ordenado
    -l: Índice inicial
    -r: Índice final
-   -comparisons: Ponteiro para contador de comparações
-   -swaps: Ponteiro para contador de trocas*/
+   -metrics: BenchMetrics to storage BenchMark data
+*/
 void merge_sort_helper(long int arr[], int l, int r, BenchMetrics *metrics) {
     if (l < r) {
         //encontra o ponto médio para dividir o array
@@ -85,18 +87,19 @@ void merge_sort_helper(long int arr[], int l, int r, BenchMetrics *metrics) {
 }
 
 
-/*função principal do Merge Sort que inicia o processo de ordenação
+/*
+função principal do Merge Sort que inicia o processo de ordenação
    parametros:
    -arr[]: Array a ser ordenado
    -n: Tamanho do array
-   -*metrics: BenchMetrics to storage data
+   -metrics: BenchMetrics to storage data
 */
 void merge_sort(long int arr[], long int n, BenchMetrics *metrics) {
     merge_sort_helper(arr, 0, n - 1, metrics);  //chama a função auxiliar
 }
 
 
-/*função que testa o Merge Sort com diferentes configurações*/
+// função que testa o Merge Sort com diferentes configurações
 BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSSIBLES]) {
     //tamanhos de arrays para teste
     int sizes[] = {FIRST_SIZE, SECOND_SIZE, THIRD_SIZE, FOURTH_SIZE};
