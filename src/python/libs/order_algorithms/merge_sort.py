@@ -109,16 +109,16 @@ if __name__ == "__main__":
     
     from random import randint
 
-    bubble: MergeSort = MergeSort()
-    bubble.numbers_list = [randint(0, 100) for c in range(100)]
+    merge: MergeSort = MergeSort()
+    merge.numbers_list = [randint(0, 100) for c in range(100)]
 
-    bubble.print_list()
+    merge.print_list()
     metrics: BenchMetrics | None = BenchMetrics()
     if (metrics != None):
         metrics.algorithm_name = MERGE_NAME
         metrics.data_type = FIRST_ORDER
-        metrics = bubble.benchmarkSort(metrics)
-        bubble.print_list()
+        metrics = merge.benchmarkSort(metrics)
+        merge.print_list()
         print(f"""
           Algotithm Name: {metrics.algorithm_name} 
           Data Type: {metrics.data_type}
