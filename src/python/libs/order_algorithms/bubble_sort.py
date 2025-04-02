@@ -8,8 +8,10 @@ else:
     path.append(f"{python_path}/src/python/libs")
 
 
+from typing import Union
+
 from basic_elements import ListCreator
-from benchmark.data import BenchMetrics
+from benchmark.data import BenchMetrics, BUBBLE_NAME, FIRST_ORDER
 from benchmark.measuring import benchmark
 
 import logging
@@ -17,10 +19,11 @@ import logging
 class BubbleSort(ListCreator):
     def __init__(self) -> None:
         super().__init__()
-        self.steps = 0 # Steps counter
+        self.swaps: int = 0 # Swaps counter
+        self.comparations: int = 0 # Comparations counter
 
     @benchmark
-    def benchmarkSort(self, metrics: BenchMetrics) -> BenchMetrics:
+    def benchmarkSort(self, metrics: BenchMetrics) -> Union[BenchMetrics | None]:
         """
         Will sort all number in the list with bubble sort algorithm
 
@@ -29,18 +32,19 @@ class BubbleSort(ListCreator):
 
         Returns: 
             BenchMetrics: All metrics updated
+            None: If list is empty
         """
 
         if len(self.numbers_list) == 0:
             logging.warning("Lista de números está vazia. Impossível ordenar")
-            metrics.label = "Erro: Lista Vazia"
-            metrics.execution_time = 0
-            metrics.memory_usage = (0, 0)
-            metrics.steps = 0
-            return metrics
-        
+            return None
+             
+        # Run algorithm
         self.bubbleSort()
-        metrics.steps = self.steps # Update steps on metrics
+
+        # Update metrics
+        metrics.comparations = self.comparations # Update comparations on metrics
+        metrics.swaps = self.swaps # Update swaps on metrics
         return metrics
 
     def bubbleSort(self) -> None:
@@ -55,7 +59,7 @@ class BubbleSort(ListCreator):
             
             for n in range(list_size):
                    
-                self.steps += 1 # Update steps
+                self.comparations += 1 # Update steps
 
                 # If n is index of the last element
                 if  n == list_size - 1:
@@ -67,6 +71,7 @@ class BubbleSort(ListCreator):
                    temp: int = self.numbers_list[n]
                    self.numbers_list[n] = self.numbers_list[n+1]
                    self.numbers_list[n+1] = temp
+                   self.swaps += 1 # Update swaps counter
                    break
 
                 # Just ignore
@@ -87,8 +92,15 @@ if __name__ == "__main__":
 
     bubble.print_list()
     metrics: BenchMetrics = BenchMetrics()
-    metrics.label = "Teste"
-    metrics.steps = 0
+    metrics.algorithm_name = BUBBLE_NAME
+    metrics.data_type = FIRST_ORDER
     metrics = bubble.benchmarkSort(metrics)
     bubble.print_list()
-    print(f"\nLabel: {metrics.label}, Steps: {metrics.steps}, Memory: {metrics.memory_usage}, Execution time: {metrics.execution_time}")
+    print(f"""
+          Algotithm Name: {metrics.algorithm_name} 
+          Data Type: {metrics.data_type}
+          Execution time: {metrics.execution_time}
+          Memory: {metrics.memory_usage}
+          Comparations: {metrics.comparations}
+          Swaps: {metrics.swaps}
+    """)
