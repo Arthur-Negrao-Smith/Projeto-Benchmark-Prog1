@@ -25,7 +25,7 @@
     /// @brief Main Merge sort, it init the sorter process
     /// @param arr This is the array that will be sorted
     /// @param n Arraay size
-    /// @param BenchMetrics to storage BenchMark data
+    /// @param metrics to storage BenchMark data
     void merge_sort(long int[], long int, BenchMetrics*);
 
 
