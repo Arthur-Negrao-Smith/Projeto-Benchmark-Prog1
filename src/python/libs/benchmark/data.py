@@ -7,5 +7,6 @@ class BenchMetrics:
     execution_time: float
     comparations: int
     swaps: int
-    label: str
+    algorithm_name: str
+    data_type: str
 

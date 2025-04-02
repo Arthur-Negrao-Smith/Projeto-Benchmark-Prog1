@@ -20,15 +20,18 @@ def benchmark(func: FunctionType) -> BenchMetrics:
         metrics: BenchMetrics = BenchMetrics()
 
         tmc.start() # Init calculate memory
-        time_start: int = time() # time of estart program
+        time_start: int = time() # Time of estart program
 
-        function_metrics: BenchMetrics = func(self, *args) # function
+        # Run function
+        function_metrics: BenchMetrics = func(self, *args)
         
         metrics.execution_time = time() - time_start # Collect total time
-        metrics.memory_usage = tmc.get_traced_memory() # collect memory usage
+        metrics.memory_usage = tmc.get_traced_memory() # Collect memory usage
         tmc.stop() # Stop memory calcute
 
-        metrics.label = function_metrics.label
+        # Update metrics
+        metrics.algorithm_name = function_metrics.algorithm_name
+        metrics.data_type = function_metrics.data_type
         metrics.comparations = function_metrics.comparations
         metrics.swaps = function_metrics.swaps
         
