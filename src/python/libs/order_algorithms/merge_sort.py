@@ -1,26 +1,26 @@
+# Update path
 from os import getcwd
-from sys import path, platform
+from basic_elements import update_python_path
+current_dir: str = getcwd()
+update_python_path(current_dir)
 
-python_path: str = getcwd()
-if platform == "win32":
-    path.append(f"{python_path}\\src\\python\\libs")
-else:
-    path.append(f"{python_path}/src/python/libs")
-
-
+# Extern imports
+from typing import Union
 import logging
 
-from basic_elements import ListCreator 
-from benchmark.data import BenchMetrics
+# Intern imports
+from basic_elements import ListCreator
+from benchmark.data import BenchMetrics, MERGE_NAME, FIRST_ORDER
 from benchmark.measuring import benchmark
 
 class MergeSort(ListCreator):
     def __init__(self) -> None:
         super().__init__()
-        self.steps: int = 0 # to calculate steps
+        self.swaps: int = 0 # Swaps counter
+        self.comparations: int = 0 # Comparations counter
 
     @benchmark
-    def benchmarkSort(self, metrics: BenchMetrics) -> BenchMetrics:
+    def benchmarkSort(self, metrics: BenchMetrics) -> Union[BenchMetrics | None]:
         """
         Will sort all number in the list with merge sort algorithm
 
@@ -29,18 +29,19 @@ class MergeSort(ListCreator):
 
         Returns: 
             BenchMetrics: All metrics updated
+            None: If list is empty
         """
         
         if len(self.numbers_list) == 0:
             logging.warning("Lista de números está vazia. Impossível ordenar")
-            metrics.label = "Erro: Lista Vazia"
-            metrics.execution_time = 0
-            metrics.memory_usage = (0, 0)
-            metrics.steps = 0
-            return metrics
+            return None
         
+        # Run Algorithm 
         self.mergeSort(self.numbers_list)
-        metrics.steps = self.steps # to calculate steps
+        
+        # Update metrics
+        metrics.comparations = self.comparations # Update comparations on metrics
+        metrics.swaps = self.swaps # Update swaps on metrics
         return metrics
                
 
@@ -64,6 +65,9 @@ class MergeSort(ListCreator):
             r: int = 0 # Right list index
             k: int = 0 # Main list index
             
+            # To avoid unnecessary increments
+            if not (l < len(left_list) and r < len(right_list)):
+                self.comparations += 1
             # While not finish left or right list
             while l < len(left_list) and r < len(right_list):
                 if left_list[l] < right_list[r]:
@@ -73,37 +77,53 @@ class MergeSort(ListCreator):
                     numbers_list[k] = right_list[r]
                     r += 1
                 k += 1
-                self.steps += 1
+                self.swaps += 1
+                self.comparations += 1
 
+
+            # To avoid unnecessary increments
+            if not (l < len(left_list)):
+                self.comparations += 1
             # Finish append left list
             while l < len(left_list):
                 numbers_list[k] = left_list[l]
+                self.swaps += 1
                 l += 1
                 k += 1         
-                self.steps += 1   
+                self.comparations += 1   
 
+
+            # To avoid unnecessary increments
+            if not (r < len(right_list)):
+                self.comparations += 1
             # Finish append right list
             while r < len(right_list):
                 numbers_list[k] = right_list[r]
+                self.swaps += 1
                 r += 1
                 k += 1            
-                self.steps += 1
+                self.comparations += 1
     
 
 if __name__ == "__main__":
     
     from random import randint
 
-    merge: MergeSort = MergeSort()
-    merge.numbers_list = [randint(0, 100) for c in range(100)]
-    
-    merge.print_list()
-    metrics: BenchMetrics = BenchMetrics()
-    metrics.label = "Teste"
-    metrics.steps = 0
-    metrics = merge.benchmarkSort(metrics)
-    merge.print_list()
-    print(f"\nLabel: {metrics.label}, Steps: {metrics.steps}, Memory: {metrics.memory_usage}, Execution time: {metrics.execution_time}")
-    
+    bubble: MergeSort = MergeSort()
+    bubble.numbers_list = [randint(0, 100) for c in range(100)]
 
-
+    bubble.print_list()
+    metrics: BenchMetrics | None = BenchMetrics()
+    if (metrics != None):
+        metrics.algorithm_name = MERGE_NAME
+        metrics.data_type = FIRST_ORDER
+        metrics = bubble.benchmarkSort(metrics)
+        bubble.print_list()
+        print(f"""
+          Algotithm Name: {metrics.algorithm_name} 
+          Data Type: {metrics.data_type}
+          Execution time: {metrics.execution_time}
+          Memory: {metrics.memory_usage}
+          Comparations: {metrics.comparations}
+          Swaps: {metrics.swaps}
+        """)
