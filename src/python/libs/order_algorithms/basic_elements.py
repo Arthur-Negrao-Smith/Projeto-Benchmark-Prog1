@@ -1,6 +1,25 @@
 import logging
 from random import randint
 
+from sys import path, platform
+
+def update_python_path(current_dir: str) -> None:
+    """
+    Will append libs of the project
+
+    Args:
+        current_dir (required): Acquired string by os.getcwd()
+    """
+    if platform == "win32":
+        python_path: str = f"{current_dir}\\src\\python\\libs"
+        if python_path not in current_dir:
+            path.append(python_path)
+    else:
+        python_path: str = f"{current_dir}/src/python/libs"
+        if python_path not in current_dir:
+            path.append(f"{current_dir}/src/python/libs")
+
+
 class ListCreator:
     def __init__(self) -> None:
         """

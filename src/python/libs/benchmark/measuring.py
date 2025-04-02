@@ -2,7 +2,7 @@
 from .data import BenchMetrics
 
 # Extern imports
-from typing import FunctionType
+from types import FunctionType
 import logging
 from time import time
 import tracemalloc as tmc
