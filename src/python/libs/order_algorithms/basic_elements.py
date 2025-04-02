@@ -19,6 +19,9 @@ def update_python_path(current_dir: str) -> None:
         if python_path not in current_dir:
             path.append(f"{current_dir}/src/python/libs")
 
+from os import getcwd
+current_dir: str = getcwd()
+update_python_path(current_dir)
 
 class ListCreator:
     def __init__(self) -> None:
