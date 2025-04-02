@@ -53,12 +53,26 @@ all: \
 libed:	\
 		$(OBJ)/benchmark.o \
 		$(OBJ)/bubble_sort.o \
-		$(OBJ)/merge_sort.o
+		$(OBJ)/merge_sort.o \
+		$(OBJ)/quick_sort.o
 
 	
 # Compile to linux
 linux: libed
 	$(C_COMP) $(SRC)/main.c $(OBJ)/*.o -I $(INCLUDE) -o $(BIN)/main
+
+
+# Compile libs Windows
+libed_windows:	\
+	$(OBJ)\\benchmark.o \
+	$(OBJ)\\bubble_sort.o \
+	$(OBJ)\\merge_sort.o \
+	$(OBJ)\\quick_sort.o
+
+
+# Compile to windows
+windows: libed_windows
+	$(C_COMP) $(SRC)\\main.c $(OBJ)\\*.o -I $(INCLUDE) -o $(BIN)\\main.exe $(CFLAGS)
 
 
 # Generic flag to object.o files linux
@@ -69,18 +83,6 @@ $(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h
 # Generic flag to object.o files windows
 $(OBJ)\\%.o: $(SRC)\\%.c $(INCLUDE)\\%.h
 	$(C_COMP) -c $< -I $(INCLUDE) -o $@ $(CFLAGS)
-
-
-# Compile libs Windows
-libed_windows:	\
-	$(OBJ)\\benchmark.o \
-	$(OBJ)\\bubble_sort.o \
-	$(OBJ)\\merge_sort.o
-
-
-# Compile to windows
-windows: libed_windows
-	$(C_COMP) $(SRC)\\main.c $(OBJ)\\*.o -I $(INCLUDE) -o $(BIN)\\main.exe $(CFLAGS)
 
 
 # Run application
