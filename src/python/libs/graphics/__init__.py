@@ -1,0 +1,1 @@
+from .graphic_generator import GraphicData
