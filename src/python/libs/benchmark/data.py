@@ -1,3 +1,9 @@
+# Algorith's Names 
+BUBBLE_NAME: str = "bubble"
+MERGE_NAME: str = "merge"
+QUICK_NAME: str = "quick"
+
+
 # Definig metrics
 class BenchMetrics:
     """
@@ -9,4 +15,3 @@ class BenchMetrics:
     swaps: int
     algorithm_name: str
     data_type: str
-
