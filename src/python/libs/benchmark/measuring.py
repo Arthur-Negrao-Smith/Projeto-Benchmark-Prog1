@@ -29,7 +29,8 @@ def benchmark(func: FunctionType) -> BenchMetrics:
         tmc.stop() # Stop memory calcute
 
         metrics.label = function_metrics.label
-        metrics.steps = function_metrics.steps
+        metrics.comparations = function_metrics.comparations
+        metrics.swaps = function_metrics.swaps
         
         return metrics
     return wrapper

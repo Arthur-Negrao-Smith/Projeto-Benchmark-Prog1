@@ -5,6 +5,7 @@ class BenchMetrics:
     """
     memory_usage: tuple[int]
     execution_time: float
-    steps: int
+    comparations: int
+    swaps: int
     label: str
 
