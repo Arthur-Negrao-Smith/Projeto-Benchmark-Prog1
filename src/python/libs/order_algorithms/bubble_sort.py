@@ -1,20 +1,17 @@
+# Update path
 from os import getcwd
-from sys import path, platform
+from basic_elements import update_python_path
+current_dir: str = getcwd()
+update_python_path(current_dir)
 
-python_path: str = getcwd()
-if platform == "win32":
-    path.append(f"{python_path}\\src\\python\\libs")
-else:
-    path.append(f"{python_path}/src/python/libs")
-
-
-from typing import Union
-
+# Intern imports
 from basic_elements import ListCreator
 from benchmark.data import BenchMetrics, BUBBLE_NAME, FIRST_ORDER
 from benchmark.measuring import benchmark
 
+# Extern imports
 import logging
+from typing import Union
 
 class BubbleSort(ListCreator):
     def __init__(self) -> None:
@@ -91,16 +88,17 @@ if __name__ == "__main__":
     bubble.numbers_list = [randint(0, 100) for c in range(100)]
 
     bubble.print_list()
-    metrics: BenchMetrics = BenchMetrics()
-    metrics.algorithm_name = BUBBLE_NAME
-    metrics.data_type = FIRST_ORDER
-    metrics = bubble.benchmarkSort(metrics)
-    bubble.print_list()
-    print(f"""
+    metrics: BenchMetrics | None = BenchMetrics()
+    if (metrics != None):
+        metrics.algorithm_name = BUBBLE_NAME
+        metrics.data_type = FIRST_ORDER
+        metrics = bubble.benchmarkSort(metrics)
+        bubble.print_list()
+        print(f"""
           Algotithm Name: {metrics.algorithm_name} 
           Data Type: {metrics.data_type}
           Execution time: {metrics.execution_time}
           Memory: {metrics.memory_usage}
           Comparations: {metrics.comparations}
           Swaps: {metrics.swaps}
-    """)
+        """)
