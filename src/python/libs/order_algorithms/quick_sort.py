@@ -8,7 +8,7 @@ update_python_path(current_dir)
 from typing import Union
 import logging
 
-# Inter imports
+# Intern imports
 from basic_elements import ListCreator 
 from benchmark.data import BenchMetrics, QUICK_NAME, FIRST_ORDER
 from benchmark.measuring import benchmark
