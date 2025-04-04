@@ -1,5 +1,12 @@
+import os
+import sys
+
+current_dir: str = os.path.abspath(os.curdir)
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
 # Intern imports
-from .data import BenchMetrics
+from src.python.libs.benchmark.data import BenchMetrics
 
 # Extern imports
 from types import FunctionType

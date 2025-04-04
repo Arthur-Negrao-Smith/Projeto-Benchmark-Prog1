@@ -1,13 +1,14 @@
-# Update path
-from os import getcwd
-from basic_elements import update_python_path
-current_dir: str = getcwd()
-update_python_path(current_dir)
+import os
+import sys
+
+current_dir: str = os.path.abspath(os.curdir)
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 # Intern imports
-from basic_elements import ListCreator
-from benchmark.data import BenchMetrics, BUBBLE_NAME, FIRST_ORDER
-from benchmark.measuring import benchmark
+from src.python.libs.order_algorithms.basic_elements import ListCreator
+from src.python.libs.benchmark.data import BenchMetrics, BUBBLE_NAME, FIRST_ORDER
+from src.python.libs.benchmark.measuring import benchmark
 
 # Extern imports
 import logging

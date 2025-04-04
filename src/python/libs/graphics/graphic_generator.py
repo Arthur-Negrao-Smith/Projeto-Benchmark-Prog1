@@ -1,11 +1,9 @@
-from os import getcwd
-from sys import path, platform
+import os
+import sys
 
-python_path: str = getcwd()
-if platform == "win32":
-    path.append(f"{python_path}\\src\\python\\libs")
-else:
-    path.append(f"{python_path}/src/python/libs")
+current_dir: str = os.path.abspath(os.curdir)
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 
 # Constants Columns
@@ -18,7 +16,7 @@ SWAPS_NAME_COLUMN: str = "Trocas"
 
 
 # Intern imports
-from benchmark.data import BenchMetrics, BUBBLE_NAME, MERGE_NAME, QUICK_NAME 
+from src.python.libs.benchmark.data import BenchMetrics, BUBBLE_NAME, MERGE_NAME, QUICK_NAME 
 
 # Extern imports
 import logging # To debug

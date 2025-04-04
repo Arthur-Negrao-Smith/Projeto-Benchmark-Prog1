@@ -1,17 +1,20 @@
 # Update path to libs
-from os import getcwd
-from basic_elements import update_python_path
-current_dir: str = getcwd()
-update_python_path(current_dir)
+# Update path
+import os
+import sys
+
+current_dir: str = os.path.abspath(os.curdir)
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 # Extern imports
 from typing import Union
 import logging
 
 # Intern imports
-from basic_elements import ListCreator 
-from benchmark.data import BenchMetrics, QUICK_NAME, FIRST_ORDER
-from benchmark.measuring import benchmark
+from src.python.libs.order_algorithms.basic_elements import ListCreator 
+from src.python.libs.benchmark.data import BenchMetrics, QUICK_NAME, FIRST_ORDER
+from src.python.libs.benchmark.measuring import benchmark
 
 class QuickSort(ListCreator):
     def __init__(self) -> None:

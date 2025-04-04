@@ -1,17 +1,20 @@
 # Update path
-from os import getcwd
-from basic_elements import update_python_path
-current_dir: str = getcwd()
-update_python_path(current_dir)
+import os
+import sys
+
+current_dir: str = os.path.abspath(os.curdir)
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
 
 # Extern imports
 from typing import Union
 import logging
 
 # Intern imports
-from basic_elements import ListCreator
-from benchmark.data import BenchMetrics, MERGE_NAME, FIRST_ORDER
-from benchmark.measuring import benchmark
+from src.python.libs.order_algorithms.basic_elements import ListCreator
+from src.python.libs.benchmark.data import BenchMetrics, MERGE_NAME, FIRST_ORDER,FOURTH_SIZE
+from src.python.libs.benchmark.measuring import benchmark
 
 class MergeSort(ListCreator):
     def __init__(self) -> None:
@@ -110,18 +113,17 @@ if __name__ == "__main__":
     from random import randint
 
     merge: MergeSort = MergeSort()
-    merge.numbers_list = [randint(0, 100) for c in range(100)]
+    merge.data_generator(4, FIRST_ORDER)
 
-    merge.print_list()
     metrics: BenchMetrics | None = BenchMetrics()
     if (metrics != None):
         metrics.algorithm_name = MERGE_NAME
         metrics.data_type = FIRST_ORDER
         metrics = merge.benchmarkSort(metrics)
-        merge.print_list()
         print(f"""
           Algotithm Name: {metrics.algorithm_name} 
           Data Type: {metrics.data_type}
+          List size: {metrics.list_size}
           Execution time: {metrics.execution_time}
           Memory: {metrics.memory_usage}
           Comparations: {metrics.comparations}
