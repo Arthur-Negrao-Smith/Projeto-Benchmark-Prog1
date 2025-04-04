@@ -21,6 +21,7 @@ class ListCreator:
         Base to order algorithms
         """
         self.numbers_list: list[int] = list()
+        self.data_type: str = ""
         self._MIN_NUMBER: int = 0
         self._MAX_NUMBER: int = 1_000_000
         self._SIZES: dict[int, int] = {
@@ -51,15 +52,19 @@ class ListCreator:
 
         if data_type == FIRST_ORDER:
             self.numbers_list = [i for i in range(0, self._SIZES[size])]
+            self.data_type = FIRST_ORDER
 
         elif data_type == SECOND_ORDER:
             self.numbers_list = [i for i in range(self._SIZES[size]-1, -1, -1)]
+            self.data_type = SECOND_ORDER
         
         elif data_type == THIRD_ORDER:
             self.numbers_list = [randint(self._MIN_NUMBER, self._MAX_NUMBER) for n in range(self._SIZES[size])]
+            self.data_type = THIRD_ORDER
         
         elif data_type == FOURTH_ORDER:
             self.numbers_list = [randint(self._MIN_NUMBER, self._MAX_NUMBER) % REPEATER_FACTOR for c in range(self._SIZES[size])]
+            self.data_type = FOURTH_ORDER
 
         else:
             logging.warning("Opção inválida: Valor de data_type fora das opções possíveis")
