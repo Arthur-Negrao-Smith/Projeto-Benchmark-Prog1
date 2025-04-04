@@ -13,7 +13,7 @@ import logging
 
 # Intern imports
 from src.python.libs.order_algorithms.basic_elements import ListCreator
-from src.python.libs.benchmark.data import BenchMetrics, MERGE_NAME, FIRST_ORDER,FOURTH_SIZE
+from src.python.libs.benchmark.data import BenchMetrics, MERGE_NAME, SECOND_ORDER
 from src.python.libs.benchmark.measuring import benchmark
 
 class MergeSort(ListCreator):
@@ -44,6 +44,7 @@ class MergeSort(ListCreator):
         
         # Update metrics
         metrics.algorithm_name = MERGE_NAME
+        metrics.data_type = self.data_type
         metrics.list_size = len(self.numbers_list)
         metrics.comparations = self.comparations # Update comparations on metrics
         metrics.swaps = self.swaps # Update swaps on metrics
@@ -111,16 +112,12 @@ class MergeSort(ListCreator):
     
 
 if __name__ == "__main__":
-    
-    from random import randint
 
     merge: MergeSort = MergeSort()
-    merge.data_generator(4, FIRST_ORDER)
+    merge.data_generator(4, SECOND_ORDER)
 
     metrics: BenchMetrics | None = BenchMetrics()
     if (metrics != None):
-        metrics.algorithm_name = MERGE_NAME
-        metrics.data_type = FIRST_ORDER
         metrics = merge.benchmarkSort(metrics)
         print(f"""
           Algotithm Name: {metrics.algorithm_name} 

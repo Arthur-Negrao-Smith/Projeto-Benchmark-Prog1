@@ -58,8 +58,12 @@ class BubbleSort(ListCreator):
         
         for i in range(list_size - 1):
             swaped: bool = False
+
             for j in range(list_size - 1 - i):
+                self.comparations += 1
+
                 if self.numbers_list[j] > self.numbers_list[j+1]:
+                    self.swaps += 1
                     self.swap(j, j+1)
                     swaped = True
 
@@ -70,8 +74,6 @@ class BubbleSort(ListCreator):
         self.numbers_list[a], self.numbers_list[b] = self.numbers_list[b], self.numbers_list[a]
 
 if __name__ == "__main__":
-    
-    from random import randint
 
     bubble: BubbleSort = BubbleSort()
     bubble.data_generator(1, SECOND_ORDER)
