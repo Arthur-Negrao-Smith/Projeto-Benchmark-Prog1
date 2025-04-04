@@ -43,6 +43,8 @@ class QuickSort(ListCreator):
         self.quickSort(self.numbers_list, 0, len(self.numbers_list) - 1)
         
         # Update metrics
+        metrics.algorithm_name = QUICK_NAME
+        metrics.list_size = len(self.numbers_list)
         metrics.comparations = self.comparations # Update comparations on metrics
         metrics.swaps = self.swaps # Update swaps on metrics
         return metrics

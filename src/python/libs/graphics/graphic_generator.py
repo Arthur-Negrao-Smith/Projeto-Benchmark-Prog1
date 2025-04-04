@@ -27,7 +27,11 @@ import pandas as pd # To create a table
 
 class GraphicData:
     def __init__(self) -> int:
-        self._data_dict: dict[str, pd.DataFrame] = dict()
+        self._data_dict: dict[str, pd.DataFrame] = {
+            BUBBLE_NAME: pd.DataFrame(),
+            MERGE_NAME: pd.DataFrame(),
+            QUICK_NAME: pd.DataFrame()
+            }
 
     def __str__(self) -> str:
         return f"{self._data_dict}"
@@ -37,7 +41,7 @@ class GraphicData:
         self._data_dict[data.algorithm_name].add(temp_dataFrame)
 
     def benchMetrics_to_df(self, data: BenchMetrics) -> Union[pd.DataFrame | None]:
-        if type(data) == BenchMetrics:
+        if type(data) == type(BenchMetrics):
             logging.warning(f"ERRO: benchMetrics_to_df aceita apeans o tipo BenchMetrics. Tipo passado -> {type(data)}")
             return None
         

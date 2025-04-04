@@ -43,6 +43,8 @@ class MergeSort(ListCreator):
         self.mergeSort(self.numbers_list)
         
         # Update metrics
+        metrics.algorithm_name = MERGE_NAME
+        metrics.list_size = len(self.numbers_list)
         metrics.comparations = self.comparations # Update comparations on metrics
         metrics.swaps = self.swaps # Update swaps on metrics
         return metrics
