@@ -87,7 +87,7 @@ class GraphicData:
 
         for key, value in zip(self._data_dict.keys(), self._data_dict.values()):
             if value is not None:
-                value.to_csv(f"{path}/{key}-python.csv")
+                value.to_csv(f"{path}/{key}-python.csv", mode="a", index=False)
 
         return 0
             
