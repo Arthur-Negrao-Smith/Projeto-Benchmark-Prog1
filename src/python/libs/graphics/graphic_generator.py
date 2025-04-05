@@ -21,7 +21,7 @@ from src.python.libs.benchmark.data import BenchMetrics, BUBBLE_NAME, MERGE_NAME
 
 # Extern imports
 import logging # To debug
-from typing import Union
+from typing import Union, Optional
 import matplotlib.pyplot as plt # To show the graphics
 import pandas as pd # To create a table
 
@@ -72,22 +72,29 @@ class GraphicData:
         })
         return temp_dataFrame
     
-    def save_as_csv(self, path: str) -> int:
+    def save_as_csv(self, path: str, algorithm_to_save: Optional[str] = None) -> int:
         """
         It will convert GraphicData to a csv file
 
         Args:
             path (required): Path to storage data
+            algortihm_to_save (optional): Specifies the column to be save
 
         Returns:
-            int: It will return 0 if was all very well, and will return 1 if path is not of type str
+            int: It will return 0 if was all very well. It will return 1 if path is not of type str and will return 2 if name of algorithm in algorithm_to_save not exist
         """
         if type(path) != str:
             return 1
+        
+        if algorithm_to_save is not None and algorithm_to_save not in [BUBBLE_NAME, MERGE_NAME, QUICK_NAME]:
+            return 2
 
-        for key, value in zip(self._data_dict.keys(), self._data_dict.values()):
-            if value is not None:
-                value.to_csv(f"{path}/{key}-python.csv", mode="a", index=False)
+        if algorithm_to_save is None:
+            for key, value in zip(self._data_dict.keys(), self._data_dict.values()):
+                if value is not None:
+                    value.to_csv(f"{path}/{key}-python.csv", mode="a", index=False)
+        else:
+            self._data_dict[algorithm_to_save].to_csv(f"{path}/{algorithm_to_save}-python.csv", mode="a", index=False)
 
         return 0
             
