@@ -17,6 +17,7 @@ from src.python.libs.benchmark.data import BenchMetrics, MERGE_NAME, SECOND_ORDE
 from src.python.libs.benchmark.measuring import benchmark
 
 class MergeSort(ListCreator):
+    """Class to use Merge sort algorithm"""
     def __init__(self) -> None:
         super().__init__()
         self.swaps: int = 0 # Swaps counter
@@ -31,8 +32,7 @@ class MergeSort(ListCreator):
             metrics (required): Metrics wich will be used to storage data
 
         Returns: 
-            BenchMetrics: All metrics updated
-            None: If list is empty
+            Union: It will returns all metrics updated if list is not empty, else returns None
         """
         
         if len(self.numbers_list) == 0:
@@ -53,7 +53,7 @@ class MergeSort(ListCreator):
 
     def mergeSort(self, numbers_list: list[int]) -> None:
         """
-        Merge sort recursive algorithm
+        It will sort the list using the recursive merge sort algorithm
 
         Args: 
             numbers_list (required): List to be sort

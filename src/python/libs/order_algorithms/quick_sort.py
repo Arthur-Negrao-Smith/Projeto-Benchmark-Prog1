@@ -17,6 +17,7 @@ from src.python.libs.benchmark.data import BenchMetrics, QUICK_NAME, SECOND_ORDE
 from src.python.libs.benchmark.measuring import benchmark
 
 class QuickSort(ListCreator):
+    """Class to use Quick sort algorithm"""
     def __init__(self) -> None:
         super().__init__()
         self.comparations: int = 0 # to calculate comparations
@@ -31,8 +32,7 @@ class QuickSort(ListCreator):
             metrics (required): Metrics wich will be used to storage data
 
         Returns: 
-            BenchMetrics: All metrics updated
-            None: If list is empty
+            Union: It will returns all metrics updated if list is not empty, else returns None
         """
         
         if len(self.numbers_list) == 0:
@@ -63,6 +63,13 @@ class QuickSort(ListCreator):
         self.swaps += 1
     
     def quickSort(self, numbers_list: list[int]) -> None:
+        """
+        It will sort the list using the quick sort algorithm
+
+        Args:
+            numbers_list (required): List with all numbers to sorte
+        """
+
         # Stack to simulate a recursion
         stack = [(0, len(numbers_list) - 1)]
     
@@ -78,6 +85,17 @@ class QuickSort(ListCreator):
                 stack.append((pivot + 1, high))  # Right sublist 
 
     def partition(self, numbers_list: list[int], low: int, high: int) -> int:
+        """
+        It will partition array and returns lower index
+
+        Args:
+            numbers_list (required): List all numbers to partition
+            low (required): Lower index of numbers_list
+            high (required): Greater index of numbers_list
+
+        Returns:
+            int: Lower index of partition numbers_list
+        """
         pivot = numbers_list[high]
         l = low - 1 # left index
         
@@ -117,10 +135,7 @@ class QuickSort(ListCreator):
 if __name__ == "__main__":
 
     quick: QuickSort = QuickSort()
-    quick.data_generator(4, 'random')
-    print(len(quick.numbers_list))
-    from random import randint
-    #quick.numbers_list = [randint(0, 100) for c in range(1_000)]
+    quick.data_generator(2, SECOND_ORDER)
 
     metrics: BenchMetrics | None = BenchMetrics()
     if (metrics != None):

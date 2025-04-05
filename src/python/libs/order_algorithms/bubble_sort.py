@@ -15,6 +15,7 @@ import logging
 from typing import Union
 
 class BubbleSort(ListCreator):
+    """Class to use Bubble sort algorithm"""
     def __init__(self) -> None:
         super().__init__()
         self.swaps: int = 0 # Swaps counter
@@ -29,8 +30,7 @@ class BubbleSort(ListCreator):
             metrics (required): Metrics wich will be used to storage data
 
         Returns: 
-            BenchMetrics: All metrics updated
-            None: If list is empty
+            Union: It will returns all metrics updated if list is not empty, else returns None
         """
 
         if len(self.numbers_list) == 0:
@@ -50,7 +50,7 @@ class BubbleSort(ListCreator):
 
     def bubbleSort(self) -> None:
         """
-        Bubble sort algorithm
+        It will sort the list using the bubble sort algorithmIt will sort
         """
 
         list_size: int = len(self.numbers_list)
@@ -62,14 +62,21 @@ class BubbleSort(ListCreator):
                 self.comparations += 1
 
                 if self.numbers_list[j] > self.numbers_list[j+1]:
-                    self.swap(j, j+1)
+                    self.swap(a_index=j, b_index=j+1)
                     swaped = True
 
             if not swaped:
                 break
 
-    def swap(self, a: int, b: int) -> None:
-        self.numbers_list[a], self.numbers_list[b] = self.numbers_list[b], self.numbers_list[a]
+    def swap(self, a_index: int, b_index: int) -> None:
+        """
+        Swap items in the list
+
+        Args:
+            a_index (required): Index of the first element to be swapped
+            b_index (required): Index of the second element to be swapped
+        """
+        self.numbers_list[a_index], self.numbers_list[b_index] = self.numbers_list[b_index], self.numbers_list[a_index]
         self.swaps += 1
 
 if __name__ == "__main__":
