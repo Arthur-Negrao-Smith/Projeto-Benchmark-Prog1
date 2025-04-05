@@ -17,13 +17,17 @@ SWAPS_NAME_COLUMN: str = "Trocas"
 
 
 # Intern imports
-from src.python.libs.benchmark.data import BenchMetrics, BUBBLE_NAME, MERGE_NAME, QUICK_NAME 
+from src.python.libs.benchmark.data import (BenchMetrics, 
+                                            BUBBLE_NAME, MERGE_NAME, QUICK_NAME, 
+                                            FIRST_SIZE, SECOND_SIZE, THIRD_SIZE, FOURTH_SIZE,
+                                            FIRST_ORDER, SECOND_ORDER, THIRD_ORDER, FOURTH_ORDER) 
 
 # Extern imports
 import logging # To debug
 from typing import Union, Optional
-import matplotlib.pyplot as plt # To show the graphics
 import pandas as pd # To create a table
+import matplotlib.pyplot as plt # To show the graphics
+import numpy as np # To use arrays
 
 
 class GraphicData:
@@ -143,11 +147,46 @@ class GraphicGenerator:
             
         self.graphic_data = data
 
-    def plot_graphic(self):
-        pass
+    def plot_graphic(self, columns: list[str], path: Optional[str] = None):
+        """
+        It will plot data graphics with chosen collumns
+
+        Args:
+            columns (required): Columns to show on graphic
+            path (optional): Path to save pdf file
+        """
+
+        for key, df in self.graphic_data._data_dict.items():
+            if df is not None:
+                temp_array: np.ndarray = np.array(df[[*columns]])
+
+        
+
 
 if __name__ == "__main__":
     graphic_data: GraphicData = GraphicData()
 
-    graphic_data.read_csv("src/results/data", algorithm_name='merge')
-    print(graphic_data._data_dict['merge'])
+    size: int = FOURTH_SIZE
+    order: str = FIRST_ORDER
+    algorithm_name: str = MERGE_NAME
+    print_table: bool = False
+
+    graphic_data.read_csv("src/results/data", algorithm_name=algorithm_name)
+    df: pd.DataFrame = graphic_data._data_dict[algorithm_name]
+
+    df['Tempo de execução'] = pd.to_numeric(df["Tempo de execução"], errors='coerce')
+    df['Tamanho da Lista'] = pd.to_numeric(df["Tamanho da Lista"], errors='coerce')
+    df['Comparações'] = pd.to_numeric(df["Comparações"], errors='coerce')
+    df['Trocas'] = pd.to_numeric(df["Trocas"], errors='coerce')
+    df['Memória usada'] = pd.to_numeric(df["Memória usada"], errors='coerce')
+
+    if print_table:
+        print(graphic_data._data_dict[algorithm_name])
+
+    print("Algoritmo:", algorithm_name)
+    print("Ordenação da list:", order)
+    print("Tamanho da lista:", size)
+    print("Tempo de execução:", df[(df['Ordem dos Dados'] == order) & (df['Tamanho da Lista'] == size)]['Tempo de execução'].median())
+    print("Memória usada:", df[(df['Ordem dos Dados'] == order) & (df['Tamanho da Lista'] == size)]['Memória usada'].median())
+    print("Comparações:", df[(df['Ordem dos Dados'] == order) & (df['Tamanho da Lista'] == size)]['Comparações'].median())
+    print("Trocas:", df[(df['Ordem dos Dados'] == order) & (df['Tamanho da Lista'] == size)]['Trocas'].median())
