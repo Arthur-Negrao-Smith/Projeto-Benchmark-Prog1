@@ -53,7 +53,6 @@ class BubbleSort(ListCreator):
         Bubble sort algorithm
         """
 
-        is_sorted: bool = False
         list_size: int = len(self.numbers_list)
         
         for i in range(list_size - 1):
@@ -63,7 +62,6 @@ class BubbleSort(ListCreator):
                 self.comparations += 1
 
                 if self.numbers_list[j] > self.numbers_list[j+1]:
-                    self.swaps += 1
                     self.swap(j, j+1)
                     swaped = True
 
@@ -72,17 +70,16 @@ class BubbleSort(ListCreator):
 
     def swap(self, a: int, b: int) -> None:
         self.numbers_list[a], self.numbers_list[b] = self.numbers_list[b], self.numbers_list[a]
+        self.swaps += 1
 
 if __name__ == "__main__":
 
     bubble: BubbleSort = BubbleSort()
     bubble.data_generator(1, SECOND_ORDER)
 
-    bubble.print_list()
     metrics: BenchMetrics | None = BenchMetrics()
     if (metrics != None):
         metrics = bubble.benchmarkSort(metrics)
-        bubble.print_list()
         print(f"""
           Algotithm Name: {metrics.algorithm_name} 
           Data Type: {metrics.data_type}
