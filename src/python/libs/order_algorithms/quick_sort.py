@@ -16,6 +16,8 @@ from src.python.libs.order_algorithms.basic_elements import ListCreator
 from src.python.libs.benchmark.data import BenchMetrics, QUICK_NAME, SECOND_ORDER
 from src.python.libs.benchmark.measuring import benchmark
 
+from random import randint
+
 class QuickSort(ListCreator):
     """Class to use Quick sort algorithm"""
     def __init__(self) -> None:
@@ -71,41 +73,68 @@ class QuickSort(ListCreator):
         """
 
         # Stack to simulate a recursion
-        stack = [(0, len(numbers_list) - 1)]
+        stack: list[int] = [(0, len(numbers_list) - 1)]
     
         while stack:
-            low, high = stack.pop()
+            left, right = stack.pop()
         
-            if low < high:
+            if left < right:
                 # It will partition the array
-                pivot = self.partition(numbers_list, low, high)
+                pivot = self.partition(numbers_list, left, right)
             
                 # Stack sublists
-                stack.append((low, pivot - 1))  # Left sublist
-                stack.append((pivot + 1, high))  # Right sublist 
+                stack.append((left, pivot - 1))  # Left sublist
+                stack.append((pivot + 1, right))  # Right sublist 
 
-    def partition(self, numbers_list: list[int], low: int, high: int) -> int:
+    def partition(self, numbers_list: list[int], left: int, right: int) -> int:
         """
         It will partition array and returns lower index
 
         Args:
             numbers_list (required): List all numbers to partition
-            low (required): Lower index of numbers_list
-            high (required): Greater index of numbers_list
+            left (required): Lower index of numbers_list
+            right (required): Greater index of numbers_list
 
         Returns:
             int: Lower index of partition numbers_list
         """
-        pivot = numbers_list[high]
-        l = low - 1 # left index
-        
-        for r in range(low, high): # right index
+        mid = (left + right) // 2
+    
+        # Getting the three values to compare: the leftmost, the middle, and the rightmost one
+        left_value = numbers_list[left]
+        middle_value = numbers_list[mid]
+        right_value = numbers_list[right]
+
+        # Finding the median of these three values
+        # Let's make sure the pivot is the middle value between the first, middle, and last element
+        if left_value > middle_value:
+            if left_value < right_value:
+                pivot_index = left
+            elif middle_value > right_value:
+                pivot_index = mid
+            else:
+                pivot_index = right
+        else:
+            if left_value > right_value:
+                pivot_index = left
+            elif middle_value < right_value:
+                pivot_index = mid
+            else:
+                pivot_index = right
+
+        # Swap pivot with the last element (right)
+        self.swap(numbers_list=numbers_list, a_index=pivot_index, b_index=right)
+
+        pivot = numbers_list[right]  # Pivot is the last element
+        l = left - 1  # Left index
+
+        for r in range(left, right):  # Right index
             self.comparations += 1
             if numbers_list[r] <= pivot:
                 l += 1
                 self.swap(numbers_list=numbers_list, a_index=l, b_index=r)
-                
-        self.swap(numbers_list=numbers_list, a_index=l+1, b_index=high) # return pivot to correct position
+
+        self.swap(numbers_list=numbers_list, a_index=l + 1, b_index=right)  # Returns pivot to correct position
         return l + 1
 
     @benchmark
