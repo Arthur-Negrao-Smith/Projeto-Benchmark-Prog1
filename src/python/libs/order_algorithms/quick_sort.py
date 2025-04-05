@@ -40,7 +40,7 @@ class QuickSort(ListCreator):
             return None
         
         # Run Algorithm 
-        self.numbers_list = self.quickSort(self.numbers_list)
+        self.quickSort(self.numbers_list)
         
         # Update metrics
         metrics.algorithm_name = QUICK_NAME
@@ -59,39 +59,36 @@ class QuickSort(ListCreator):
             a_index (required): Index of element to be swapped
             b_index (required): Index of element to be swapped
         """
-        temp: int = numbers_list[a_index]
-        numbers_list[a_index] = numbers_list[b_index]
-        numbers_list[b_index] = temp
-        return
-    
+        numbers_list[a_index], numbers_list[b_index] = numbers_list[b_index], numbers_list[a_index]
+        self.swaps += 1
     
     def quickSort(self, numbers_list: list[int]) -> None:
-        less = []
-        equal = []
-        greater = []
+        # Stack to simulate a recursion
+        stack = [(0, len(numbers_list) - 1)]
+    
+        while stack:
+            low, high = stack.pop()
+        
+            if low < high:
+                # It will partition the array
+                pivot = self.partition(numbers_list, low, high)
+            
+                # Stack sublists
+                stack.append((low, pivot - 1))  # Left sublist
+                stack.append((pivot + 1, high))  # Right sublist 
 
-        if len(numbers_list) > 1:
-            pivot = numbers_list[0]
-
-            for x in numbers_list:
-                self.comparations += 1
+    def partition(self, numbers_list: list[int], low: int, high: int) -> int:
+        pivot = numbers_list[high]
+        l = low - 1 # left index
+        
+        for r in range(low, high): # right index
+            self.comparations += 1
+            if numbers_list[r] <= pivot:
+                l += 1
+                self.swap(numbers_list=numbers_list, a_index=l, b_index=r)
                 
-                if x < pivot:
-                    self.swaps += 1
-                    less.append(x)
-                elif x == pivot:
-                    self.swaps += 1
-                    self.comparations += 1
-                    equal.append(x)
-                elif x > pivot:
-                    self.swaps += 1
-                    self.comparations += 2
-                    greater.append(x)
-
-            return self.quickSort(less)+equal+self.quickSort(greater)
-
-        else:  
-            return numbers_list
+        self.swap(numbers_list=numbers_list, a_index=l+1, b_index=high) # return pivot to correct position
+        return l + 1
 
     @benchmark
     def qsortBenchmark(self, metrics: BenchMetrics) -> Union[BenchMetrics | None]:
@@ -120,16 +117,14 @@ class QuickSort(ListCreator):
 if __name__ == "__main__":
 
     quick: QuickSort = QuickSort()
-    #quick.data_generator(1, 'sorted')
+    quick.data_generator(4, 'random')
     print(len(quick.numbers_list))
     from random import randint
-    quick.numbers_list = [randint(0, 100) for c in range(1_000)]
+    #quick.numbers_list = [randint(0, 100) for c in range(1_000)]
 
-    #quick.print_list()
     metrics: BenchMetrics | None = BenchMetrics()
     if (metrics != None):
         metrics = quick.benchmarkSort(metrics)
-        quick.print_list()
         print(f"""
           Algotithm Name: {metrics.algorithm_name} 
           Data Type: {metrics.data_type}
