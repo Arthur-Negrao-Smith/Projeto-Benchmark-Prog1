@@ -78,7 +78,7 @@ class GraphicData:
 
         Args:
             path (required): Path to storage data
-            algortihm_to_save (optional): Specifies the column to be save
+            algortihm_to_save (optional): Specifies the algorithm to be save
 
         Returns:
             int: It will return 0 if was all very well. It will return 1 if path is not of type str and will return 2 if name of algorithm in algorithm_to_save not exist
@@ -97,7 +97,32 @@ class GraphicData:
             self._data_dict[algorithm_to_save].to_csv(f"{path}/{algorithm_to_save}-python.csv", mode="a", index=False)
 
         return 0
+    
+    def read_csv(self, path: str, algorithm_name: Optional[str] = None) -> int:
+        """
+        It will convert csv file to GraphicData
+
+        Args:
+            path (required): Path to storage data
+            algortihm_name (optional): Specifies the algorithm to be collect
+
+        Returns:
+            int: It will return 0 if was all very well. It will return 1 if path is not of type str and will return 2 if name of algorithm in algorithm_name not exist
+        """
+
+        if type(path) != str:
+            return 1
+        
+        if algorithm_name is not None and algorithm_name not in [BUBBLE_NAME, MERGE_NAME, QUICK_NAME]:
+            return 2
             
+        if algorithm_name is None:
+            for key in self._data_dict.keys():      
+                self._data_dict[key] = pd.read_csv(f"{path}/{key}-python.csv")
+        else:
+            self._data_dict[algorithm_name] = pd.read_csv(f"{path}/{algorithm_name}-python.csv")
+
+        return 0
         
 
 class GraphicGenerator:
@@ -106,21 +131,23 @@ class GraphicGenerator:
         Graphic generator to show results of the project
         """
         self.pdf_path: str = "src/results/pdf"
-        self.data_dict: dict[str, BenchMetrics]
+        self.graphic_data: GraphicData = GraphicData()
     
-    def input_data(self, data: BenchMetrics, key: str = "") -> int:
+    def input_data(self, data: GraphicData) -> None:
         """
-        Will add Benchmark metrics on data_dict
+        Will add GraphicData on GraphicGenerator
 
         Args:
             data (required): BenchmarkMetrics wich will be add
-            key (required): Str with key to dict
         """
-        if key == None or key == "":
-            logging.warning("Não está sendo passada nenhuma key no dicionário. Nenhum valor adicionado")
-            return -1
             
-        self.data_dict[key] = data
+        self.graphic_data = data
 
     def plot_graphic(self):
         pass
+
+if __name__ == "__main__":
+    graphic_data: GraphicData = GraphicData()
+
+    graphic_data.read_csv("src/results/data", algorithm_name='merge')
+    print(graphic_data._data_dict['merge'])
