@@ -27,8 +27,17 @@
     #define QUICK_NAME                  "quick"
 
     // Path to results
-    #define RESULTS_PATH                "..\\..\\results\\benchmark_c.csv"
+    #define MAX_STRING_PATH_SIZE        1000
+    
+    // Defining systems
+    #define MAX_STRING_SYSTEM_SIZE      10
+    #define LINUX                       "__linux__"
+    #define WINDOWS                     "_WIN32"
+    #define LINUX_PATH                  "../../results/data/"
+    #define WINDOWS_PATH                "..\\..\\results\\data\\"
 
+    // Defining Header
+    #define HEADER_OF_CSV               "Algoritmo,Ordem dos Dados,Tamanho da Lista,Tempo de execução,Memória usada,Comparações,Trocas"
 
 
     /// @brief Struct to storage BenchMark metrics
@@ -74,7 +83,7 @@
     /// @param  metrics Metrics to storage
     /// @return 0 Returns 0 if everything goes well
     /// @return 1 Returns 1 if an error occurred
-    short int write_to_csv(FILE*, BenchMetrics*);
+    short int write_to_csv(char[MAX_ALGORITHM_NAME_SIZE], BenchMetrics*);
 
     /// @brief Free all array
     /// @param  benchmetrics_array Array with all BenchMetrics storage
