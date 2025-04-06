@@ -72,7 +72,7 @@ void free_BenchMetrics_array(BenchMetrics *benchmetrics_array[TOTAL_METRICS_POSS
 
 
 // Will write BenchMetrics in csv file
-short int write_to_csv(char algorithm[MAX_ALGORITHM_NAME_SIZE], BenchMetrics *metrics) {
+short int write_to_csv(BenchMetrics *metrics) {
     char system[MAX_STRING_SYSTEM_SIZE];
     char path[MAX_STRING_PATH_SIZE];
 
@@ -88,7 +88,7 @@ short int write_to_csv(char algorithm[MAX_ALGORITHM_NAME_SIZE], BenchMetrics *me
         path[MAX_STRING_PATH_SIZE-1] = '\0';
     #endif
 
-    strncat(path, algorithm, MAX_STRING_PATH_SIZE-1);
+    strncat(path, metrics->algorithm_name, MAX_STRING_PATH_SIZE-1);
     path[MAX_STRING_PATH_SIZE-1] = '\0';
     strncat(path, "-c.csv", MAX_STRING_PATH_SIZE-1);
     path[MAX_STRING_PATH_SIZE-1] = '\0';
@@ -98,14 +98,22 @@ short int write_to_csv(char algorithm[MAX_ALGORITHM_NAME_SIZE], BenchMetrics *me
     if (file) {
         fclose(file);
         file = fopen(path, "a");
-        printf("Já existe\n");
     } else {
         file = fopen(path, "a");
-        printf("Não existe: %p\n", file);
         fprintf(file, "%s", HEADER_OF_CSV);
     }
     
     fprintf(file, "%s,%s,%ld,%lf,%lld,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->comparations, metrics->swaps);
     fclose(file);
     return 0;
+}
+
+void write_BenchMetrics_array_to_csv(BenchMetrics *array[TOTAL_METRICS_POSSIBLES])
+{
+    char algorithm_name[MAX_ALGORITHM_NAME_SIZE];
+    strncpy(algorithm_name, array[0]->algorithm_name, MAX_ALGORITHM_NAME_SIZE);
+    algorithm_name[MAX_ALGORITHM_NAME_SIZE-1] = '\0';
+
+    for (int i = 0; i < TOTAL_METRICS_POSSIBLES; i++)
+        write_to_csv(array[i]);
 }

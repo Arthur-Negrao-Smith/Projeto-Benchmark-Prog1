@@ -33,11 +33,11 @@
     #define MAX_STRING_SYSTEM_SIZE      10
     #define LINUX                       "__linux__"
     #define WINDOWS                     "_WIN32"
-    #define LINUX_PATH                  "../../results/data/"
-    #define WINDOWS_PATH                "..\\..\\results\\data\\"
+    #define LINUX_PATH                  "src/results/data/"
+    #define WINDOWS_PATH                "src\\results\\data\\"
 
     // Defining Header
-    #define HEADER_OF_CSV               "Algoritmo,Ordem dos Dados,Tamanho da Lista,Tempo de execução,Memória usada,Comparações,Trocas"
+    #define HEADER_OF_CSV               "Algoritmo,Ordem dos Dados,Tamanho da Lista,Tempo de execução,Memória usada,Comparações,Trocas\n"
 
 
     /// @brief Struct to storage BenchMark metrics
@@ -83,10 +83,14 @@
     /// @param  metrics Metrics to storage
     /// @return 0 Returns 0 if everything goes well
     /// @return 1 Returns 1 if an error occurred
-    short int write_to_csv(char[MAX_ALGORITHM_NAME_SIZE], BenchMetrics*);
+    short int write_to_csv(BenchMetrics*);
 
     /// @brief Free all array
     /// @param  benchmetrics_array Array with all BenchMetrics storage
     void free_BenchMetrics_array(BenchMetrics*[TOTAL_METRICS_POSSIBLES]);
+
+    /// @brief It will sava all data on csv file
+    /// @param  array Array with all BenchMetrics
+    void write_BenchMetrics_array_to_csv(BenchMetrics*[TOTAL_METRICS_POSSIBLES]);
     
 #endif // BENCHMARK_H
