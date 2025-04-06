@@ -117,5 +117,6 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
             counter++;
         }
     }
+    write_BenchMetrics_array_to_csv(benchmetrics_array);
     return benchmetrics_array;
 }

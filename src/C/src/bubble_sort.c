@@ -79,5 +79,6 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
             counter++;
         }
     }
+    write_BenchMetrics_array_to_csv(benchmetrics_array);
     return benchmetrics_array;
 }
