@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#if defined(_WIN32) || defined(_WIN64)
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
+    #include <psapi.h>
+#else
+    #include <unistd.h>
+#endif
 
 // Will generate data to all array
 void generate_data(long int arr[], long int size, const char* data_type) {
@@ -116,4 +123,29 @@ void write_BenchMetrics_array_to_csv(BenchMetrics *array[TOTAL_METRICS_POSSIBLES
 
     for (int i = 0; i < TOTAL_METRICS_POSSIBLES; i++)
         write_to_csv(array[i]);
+}
+
+long long int get_current_memory_usage() {
+    #if defined(_WIN32) || defined(_WIN64)
+        // Windows implementation
+        HANDLE hProcess = GetCurrentProcess();
+        PROCESS_MEMORY_COUNTERS pmc;
+        
+        if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc))) {
+            return pmc.WorkingSetSize;
+        }
+        return 0;
+    #else
+        // Linux implementation
+        FILE* file = fopen("/proc/self/statm", "r");
+        if (file == NULL) return 0;
+        
+        long long memory;
+        if (fscanf(file, "%*s%lld", &memory) != 1) {
+            fclose(file);
+            return 0;
+        }
+        fclose(file);
+        return memory * sysconf(_SC_PAGESIZE);
+    #endif
 }

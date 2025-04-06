@@ -78,8 +78,9 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
 
     //cabeçalho dos resultados
     printf("Quick Sort Performance Test\n");
-    printf("Size\tData Type\t\tTime (s)\tComparations\t\tSwaps\n");
-    printf("---------------------------------------------------------------------------------------\n");
+    printf("| %-10s | %-20s | %-10s | %-12s | %-10s | %-10s |\n", 
+        "Size", "Data Type", "Time (s)", "Comparisons", "Swaps", "Memory");
+ printf("|------------|----------------------|------------|--------------|------------|------------|\n");
 
     // Counter
     short int counter = 0;
@@ -101,6 +102,9 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
 
             clock_t start = clock(); //marca o tempo inicial
+
+            metrics->memory_usage = get_current_memory_usage(size);
+
             quick_sort(arr, 0, size-1, metrics); // Executa a ordenação
             clock_t end = clock();//marca o tempo final
             
@@ -108,9 +112,13 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
             //imprime resultados formatados
-            printf("%ld\t%-16s\t%.6f\t  %lld\t\t%lld\n",
-            size, data_types[j], metrics->execution_time, metrics->comparations, metrics->swaps);
-
+            printf("| %-10ld | %-20s | %-10.6f | %-12lld | %-10lld | %-10lld |\n",
+                size, 
+                data_types[j], 
+                metrics->execution_time,
+                metrics->comparations,
+                metrics->swaps,
+                metrics->memory_usage);
             //libera memória alocada
             free(arr);
             benchmetrics_array[counter] = metrics;

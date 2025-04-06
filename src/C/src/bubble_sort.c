@@ -41,8 +41,9 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
 
     //cabeçalho dos resultados
     printf("Bubble Sort Performance Test\n");
-    printf("Size\tData Type\t\tTime (s)\tComparations\t\tSwaps\n");
-    printf("---------------------------------------------------------------------------------------\n");
+    printf("| %-10s | %-20s | %-10s | %-12s | %-10s | %-10s |\n", 
+        "Size", "Data Type", "Time (s)", "Comparisons", "Swaps", "Memory");
+ printf("|------------|----------------------|------------|--------------|------------|------------|\n");
 
     // Counter
     short int counter = 0;
@@ -65,13 +66,21 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
 
             clock_t start = clock(); //marca tempo inicial
+            
+            metrics->memory_usage = get_current_memory_usage(size);
+            
             bubble_sort(arr, size, metrics); //executa ordenação
             clock_t end = clock(); //marca tempo final
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC; //calcula tempo decorrido em segundos
             
             //imprime resultados formatados
-            printf("%ld\t%-16s\t%.6f\t  %lld\t\t%lld\n",
-            size, data_types[j], metrics->execution_time, metrics->comparations, metrics->swaps);
+            printf("| %-10ld | %-20s | %-10.6f | %-12lld | %-10lld | %-10lld |\n",
+                size, 
+                data_types[j], 
+                metrics->execution_time,
+                metrics->comparations,
+                metrics->swaps,
+                metrics->memory_usage);
 
             //libera memória alocada
             free(arr);
