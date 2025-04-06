@@ -76,7 +76,7 @@ short int write_to_csv(BenchMetrics *metrics) {
     char system[MAX_STRING_SYSTEM_SIZE];
     char path[MAX_STRING_PATH_SIZE];
 
-    #if defined(WINDOWS)
+    #if defined(_WIN32)
         strncpy(system, WINDOWS, MAX_STRING_SYSTEM_SIZE);
         system[MAX_STRING_SYSTEM_SIZE-1] = '\0';
         strncpy(path, WINDOWS_PATH, MAX_STRING_PATH_SIZE);
