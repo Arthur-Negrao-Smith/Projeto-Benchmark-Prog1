@@ -22,7 +22,8 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
     int n2 = r - m;//tamanho do subarray direito
 
     //arrays temporários para armazenar as metades
-    int L[n1], R[n2];
+    long int *L = malloc(n1 * sizeof(long int));
+    long int *R = malloc(n2 * sizeof(long int));
 
     //copia os dados para os arrays temporários
     for (i = 0; i < n1; i++)
