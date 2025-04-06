@@ -26,8 +26,6 @@ from src.python.libs.benchmark.data import (BenchMetrics,
 import logging # To debug
 from typing import Union, Optional
 import pandas as pd # To create a table
-import matplotlib.pyplot as plt # To show the graphics
-import numpy as np # To use arrays
 
 
 class TableData:
