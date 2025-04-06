@@ -112,7 +112,7 @@ BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
     int num_types = sizeof(data_types)/sizeof(data_types[0]);
 
     //cabeçalho dos resultados
-    printf("Bubble Sort Performance Test\n");
+    printf("Merge Sort Performance Test\n");
     printf("Size\tData Type\t\tTime (s)\tComparations\t\tSwaps\n");
     printf("---------------------------------------------------------------------------------------\n");
 
