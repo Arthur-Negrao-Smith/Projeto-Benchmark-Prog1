@@ -31,6 +31,9 @@ import numpy as np # To use arrays
 
 
 class TableData:
+    """
+    Dict with all algorithms data storaged
+    """
     def __init__(self) -> int:
         self._data_dict: dict[str, Union[pd.DataFrame | None]] = {
             BUBBLE_NAME: None,
@@ -40,6 +43,9 @@ class TableData:
 
     def __str__(self) -> str:
         return f"{self._data_dict}"
+    
+    def __getitem__(self, index: int) -> Union[pd.DataFrame, None]:
+        return self._data_dict[index]
 
     def insert_data(self, data: BenchMetrics) -> int:
         temp_dataFrame: pd.DataFrame = self.benchMetrics_to_df(data)
@@ -140,7 +146,7 @@ if __name__ == "__main__":
     print_table: bool = False
 
     table_data.read_csv("src/results/data", algorithm_name=algorithm_name)
-    df: pd.DataFrame = table_data._data_dict[algorithm_name]
+    df: pd.DataFrame = table_data[algorithm_name]
 
     df['Tempo de execução'] = pd.to_numeric(df["Tempo de execução"], errors='coerce')
     df['Tamanho da Lista'] = pd.to_numeric(df["Tamanho da Lista"], errors='coerce')
