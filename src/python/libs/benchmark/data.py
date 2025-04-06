@@ -19,6 +19,11 @@ FOURTH_SIZE:         int =      1_000_000
 REPEATER_FACTOR:     int =      100
 ITEMNS_PER_LINE:     int =      20
 
+# Languages
+PYTHON_LANG:         str =      "python"
+C_LANG:              str =      "c"
+
+
 # Definig metrics
 class BenchMetrics:
     """
