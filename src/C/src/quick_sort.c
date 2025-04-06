@@ -9,8 +9,31 @@
 
 /* Função de partição para o Quick Sort (esquema de Lomuto*/
 int partition(long int arr[], long int low, long int high, BenchMetrics *metrics) {
-    long int pivot = arr[high]; //seleciona o último elemento como pivô
+    long int mid = (low + high) / 2;
     
+    long int left_value = arr[low], right_value = arr[high], mid_value = arr[mid];
+    long int pivot, pivot_index;
+
+
+    if (left_value > mid_value) {
+        if (left_value < right_value)
+            pivot_index = low;
+        else if (mid_value > right_value)
+            pivot_index = mid_value;
+        else
+            pivot_index = high;
+    } else {
+        if (left_value > right_value)
+            pivot_index = low;
+        else if (mid_value < right_value)
+            pivot_index = mid;
+        else 
+            pivot_index = high;
+    }
+    
+    swap(&arr[pivot_index], &arr[high]);
+    pivot = arr[high];
+
     while (low < high)
     {
         while (low < high && arr[low] <= pivot)
