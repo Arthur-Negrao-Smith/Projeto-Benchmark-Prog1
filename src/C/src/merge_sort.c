@@ -62,6 +62,8 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
         j++;
         k++;
     }
+    free(L);
+    free(R);
 }
 
 
