@@ -136,7 +136,7 @@ ifeq ($(SYS),WIN)
 	@echo ============================================================================================================
 else
 	@echo "=================================================== Docs ==================================================="
-	@echo "Commands:""
+	@echo "Commands:"
 	@echo
 	@echo "- make                      Show the help guide and compile all project to Linux systems"
 	@echo
