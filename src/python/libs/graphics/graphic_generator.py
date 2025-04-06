@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt # To show the graphics
 import numpy as np # To use arrays
 
 
-class GraphicData:
+class TableData:
     def __init__(self) -> int:
         self._data_dict: dict[str, Union[pd.DataFrame | None]] = {
             BUBBLE_NAME: None,
@@ -78,7 +78,7 @@ class GraphicData:
     
     def save_as_csv(self, path: str, algorithm_to_save: Optional[str] = None) -> int:
         """
-        It will convert GraphicData to a csv file
+        It will convert TableData to a csv file
 
         Args:
             path (required): Path to storage data
@@ -102,12 +102,13 @@ class GraphicData:
 
         return 0
     
-    def read_csv(self, path: str, algorithm_name: Optional[str] = None) -> int:
+    def read_csv(self, path: str, language: str = "python", algorithm_name: Optional[str] = None) -> int:
         """
-        It will convert csv file to GraphicData
+        It will convert csv file to TableData
 
         Args:
             path (required): Path to storage data
+            language (optional): Language to collect data, python is default
             algortihm_name (optional): Specifies the algorithm to be collect
 
         Returns:
@@ -122,57 +123,24 @@ class GraphicData:
             
         if algorithm_name is None:
             for key in self._data_dict.keys():      
-                self._data_dict[key] = pd.read_csv(f"{path}/{key}-python.csv")
+                self._data_dict[key] = pd.read_csv(f"{path}/{key}-{language}.csv")
         else:
-            self._data_dict[algorithm_name] = pd.read_csv(f"{path}/{algorithm_name}-python.csv")
+            self._data_dict[algorithm_name] = pd.read_csv(f"{path}/{algorithm_name}-{language}.csv")
 
         return 0
         
 
-class GraphicGenerator:
-    def __init__(self) -> None:
-        """
-        Graphic generator to show results of the project
-        """
-        self.pdf_path: str = "src/results/pdf"
-        self.graphic_data: GraphicData = GraphicData()
-    
-    def input_data(self, data: GraphicData) -> None:
-        """
-        Will add GraphicData on GraphicGenerator
-
-        Args:
-            data (required): BenchmarkMetrics wich will be add
-        """
-            
-        self.graphic_data = data
-
-    def plot_graphic(self, columns: list[str], path: Optional[str] = None):
-        """
-        It will plot data graphics with chosen collumns
-
-        Args:
-            columns (required): Columns to show on graphic
-            path (optional): Path to save pdf file
-        """
-
-        for key, df in self.graphic_data._data_dict.items():
-            if df is not None:
-                temp_array: np.ndarray = np.array(df[[*columns]])
-
-        
-
 
 if __name__ == "__main__":
-    graphic_data: GraphicData = GraphicData()
+    table_data: TableData = TableData()
 
     size: int = FOURTH_SIZE
     order: str = FIRST_ORDER
     algorithm_name: str = MERGE_NAME
     print_table: bool = False
 
-    graphic_data.read_csv("src/results/data", algorithm_name=algorithm_name)
-    df: pd.DataFrame = graphic_data._data_dict[algorithm_name]
+    table_data.read_csv("src/results/data", algorithm_name=algorithm_name)
+    df: pd.DataFrame = table_data._data_dict[algorithm_name]
 
     df['Tempo de execução'] = pd.to_numeric(df["Tempo de execução"], errors='coerce')
     df['Tamanho da Lista'] = pd.to_numeric(df["Tamanho da Lista"], errors='coerce')
@@ -181,7 +149,7 @@ if __name__ == "__main__":
     df['Memória usada'] = pd.to_numeric(df["Memória usada"], errors='coerce')
 
     if print_table:
-        print(graphic_data._data_dict[algorithm_name])
+        print(table_data._data_dict[algorithm_name])
 
     print("Algoritmo:", algorithm_name)
     print("Ordenação da list:", order)
