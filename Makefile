@@ -13,14 +13,13 @@ ifeq ($(SYS),LINUX)
 	OBJ = ./src/C/obj
 	SRC = ./src/C/src
 	RUN = $(BIN)/main
-	DOT = ""
+
 else
 	BIN = .\src\C\bin
 	INCLUDE = .\src\C\include
 	OBJ = .\src\C\obj
 	SRC = .\src\C\src
 	RUN = $(BIN)\\main.exe
-	DOT = .
 
 endif
 
@@ -102,38 +101,73 @@ endif
 
 # Makefile documentation
 help:
+ifeq ($(SYS),WIN)
 	@echo =================================================== Docs ===================================================
 	@echo Commands:
-	@echo$(DOT)
+	@echo.
 	@echo - make                      Show the help guide and compile all project to Linux systems
-	@echo$(DOT)
+	@echo.
 	@echo - make all                  Show the help guide and compile all project to Linux systems
-	@echo$(DOT)
+	@echo.
 	@echo - make linux                Compile all project to Linux systems
-	@echo$(DOT)
+	@echo.
 	@echo - make windows              Compile all project to Windows system
-	@echo$(DOT)
+	@echo.
 	@echo - make run                  Will run the main on both systems
-	@echo$(DOT)
+	@echo.
 	@echo - make clean                Will clean all src/C/obj files and all src/C/bin files on both systems
-	@echo$(DOT)
+	@echo.
 	@echo - make libed                Compile libs to Linux systems
-	@echo$(DOT)
+	@echo.
 	@echo - make libed_windows        Compile libs to Windows system
-	@echo$(DOT)
+	@echo.
 	@echo - make help                 Show the help guide
-	@echo$(DOT)
+	@echo.
 	@echo - make docs                 Show the help guide
-	@echo$(DOT)
+	@echo.
 	@echo Autors:
-	@echo$(DOT)
+	@echo.
 	@echo - Arthur Negrão
 	@echo - Francisco Braga
-	@echo$(DOT)
+	@echo.
 	@echo Github repository of the project:
-	@echo$(DOT)
+	@echo.
 	@echo - https://github.com/Arthur-Negrao-Smith/Projeto-Benchmark-Prog1.git
 	@echo ============================================================================================================
+else
+	@echo "=================================================== Docs ==================================================="
+	@echo "Commands:""
+	@echo
+	@echo "- make                      Show the help guide and compile all project to Linux systems"
+	@echo
+	@echo "- make all                  Show the help guide and compile all project to Linux systems"
+	@echo
+	@echo "- make linux                Compile all project to Linux systems"
+	@echo
+	@echo "- make windows              Compile all project to Windows system"
+	@echo
+	@echo "- make run                  Will run the main on both systems"
+	@echo
+	@echo "- make clean                Will clean all src/C/obj files and all src/C/bin files on both systems"
+	@echo
+	@echo "- make libed                Compile libs to Linux systems"
+	@echo
+	@echo "- make libed_windows        Compile libs to Windows system"
+	@echo
+	@echo "- make help                 Show the help guide"
+	@echo
+	@echo "- make docs                 Show the help guide"
+	@echo
+	@echo "Autors:"
+	@echo
+	@echo "- Arthur Negrão"
+	@echo "- Francisco Braga"
+	@echo
+	@echo "Github repository of the project:"
+	@echo
+	@echo "- https://github.com/Arthur-Negrao-Smith/Projeto-Benchmark-Prog1.git"
+	@echo "============================================================================================================"
+endif
 
 
 # Makefile documentation
