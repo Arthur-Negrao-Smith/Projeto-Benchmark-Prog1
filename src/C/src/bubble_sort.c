@@ -8,6 +8,7 @@
 //simplementação do Bubble Sort
 //recebe: array, tamanho do array, ponteiros para contadores de comparações e trocas
 void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
+    short int swapped = 0;
     //loop externo: passa por todos os elementos
     for (int i = 0; i < array_size -1; i++) {
         //loop interno: compara elementos adjacentes
@@ -17,8 +18,11 @@ void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
             if (arr[j]>arr[j+1]) {
                 swap(&arr[j], &arr[j + 1]);
                 (metrics->swaps)++; //incrementa contador de trocas
+                swapped = 1;
             }
         }
+        if (!swapped) // Optimization if array was sorted
+            return;
     }
 }
 
