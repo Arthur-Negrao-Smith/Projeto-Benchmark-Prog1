@@ -31,8 +31,8 @@
     
     // Defining systems
     #define MAX_STRING_SYSTEM_SIZE      10
-    #define LINUX                       "__linux__"
-    #define WINDOWS                     "_WIN32"
+    #define LINUX                       "linux"
+    #define WINDOWS                     "windows"
     #define LINUX_PATH                  "src/results/data/"
     #define WINDOWS_PATH                "src\\results\\data\\"
 
