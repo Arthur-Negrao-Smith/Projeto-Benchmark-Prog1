@@ -93,7 +93,6 @@ short int write_to_csv(BenchMetrics *metrics) {
     path[MAX_STRING_PATH_SIZE-1] = '\0';
     strncat(path, "-c.csv", MAX_STRING_PATH_SIZE-1);
     path[MAX_STRING_PATH_SIZE-1] = '\0';
-    printf("%s\n", path);
 
     FILE *file = fopen(path, "r");
     if (file) {
