@@ -10,7 +10,6 @@ from src.python.libs.benchmark.data import BenchMetrics
 
 # Extern imports
 from types import FunctionType
-import logging
 from time import time
 import tracemalloc as tmc
 
