@@ -22,8 +22,8 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
     int n2 = r - m;//tamanho do subarray direito
 
     //arrays temporários para armazenar as metades
-    long int *L = malloc(n1 * sizeof(long int));
-    long int *R = malloc(n2 * sizeof(long int));
+    long int *L = BenchMalloc(n1 * sizeof(long int), metrics);
+    long int *R = BenchMalloc(n2 * sizeof(long int), metrics);
 
     //copia os dados para os arrays temporários
     for (i = 0; i < n1; i++)
@@ -90,6 +90,7 @@ void merge_sort_helper(long int arr[], int l, int r, BenchMetrics *metrics) {
     if (l < r) {
         //encontra o ponto médio para dividir o array
         int m = l + (r - l) / 2;
+        update_memory_usage(sizeof(int), metrics); // add memory of m variable
         
         //ordena primeira e segunda metades
         merge_sort_helper(arr, l, m, metrics);
@@ -136,23 +137,20 @@ BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
     for (int i = 0; i < num_sizes; i++) {
         for (int j = 0; j < num_types; j++) {
             long int size = sizes[i];
-            //aloca memória para o array
-            long int* arr = (long int*)malloc(size * sizeof(long int));
             
-            //gera dados conforme o tipo atual
-            generate_data(arr, size, data_types[j]);
-
-
             char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = MERGE_NAME;
             char data_type[MAX_DATA_TYPE_SIZE];
             strncpy(data_type, data_types[j], MAX_DATA_TYPE_SIZE);
             data_type[MAX_DATA_TYPE_SIZE-1] = '\0';
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
+            
+            //aloca memória para o array
+            long int* arr = (long int*)BenchMalloc(size * sizeof(long int), metrics);
+            
+            //gera dados conforme o tipo atual
+            generate_data(arr, size, data_types[j]);
 
             clock_t start = clock();//marca o tempo inicial
-
-            metrics->memory_usage = get_sort_memory_usage(size, MERGE_NAME);
-
             merge_sort(arr, size, metrics);//executa a ordenação
             clock_t end = clock();   //marca o tempo final
             

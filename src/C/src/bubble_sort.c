@@ -9,6 +9,10 @@
 //recebe: array, tamanho do array, ponteiros para contadores de comparações e trocas
 void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
     short int swapped = 0;
+    
+    update_memory_usage(sizeof(short int), metrics); // swapped variable memory
+    update_memory_usage(sizeof(long int), metrics); // temp variable to swap
+
     //loop externo: passa por todos os elementos
     for (int i = 0; i < array_size -1; i++) {
         //loop interno: compara elementos adjacentes
@@ -52,23 +56,20 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
     for (int i = 0; i < num_sizes; i++) {
         for (int j = 0; j < num_types; j++){
             long int size = sizes[i];
-
-            //aloca memória para o array
-            long int* arr = (long int*)malloc(size * sizeof(long int));
-
-            //gera dados conforme o tipo atual
-            generate_data(arr, size, data_types[j]);
-
+            
             char algorithm_name[MAX_ALGORITHM_NAME_SIZE] = BUBBLE_NAME;
             char data_type[MAX_DATA_TYPE_SIZE];
             strncpy(data_type, data_types[j], MAX_DATA_TYPE_SIZE);
             data_type[MAX_DATA_TYPE_SIZE-1] = '\0';
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
 
+            //aloca memória para o array
+            long int* arr = (long int*)BenchMalloc(size * sizeof(long int), metrics);
+
+            //gera dados conforme o tipo atual
+            generate_data(arr, size, data_types[j]);
+
             clock_t start = clock(); //marca tempo inicial
-        
-            metrics->memory_usage = get_sort_memory_usage(size, BUBBLE_NAME);
-            
             bubble_sort(arr, size, metrics); //executa ordenação
             clock_t end = clock(); //marca tempo final
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC; //calcula tempo decorrido em segundos
