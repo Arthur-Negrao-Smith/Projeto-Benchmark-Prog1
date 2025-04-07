@@ -37,9 +37,9 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
     k = l;  //indice inicial do array combinado
     
     if (!(i < n1 && j < n2))
-        (metrics->comparations)++;
+        (metrics->comparisons)++;
     while (i < n1 && j < n2) {
-        (metrics->comparations)++;  //incrementa o contador de comparações
+        (metrics->comparisons)++;  //incrementa o contador de comparações
         if (L[i] <= R[j]) {
             arr[k] = L[i];
             i++;
@@ -54,9 +54,9 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
 
     //copia os elementos restantes do subarray esquerdo, se houver
     if (!(i < n1))
-        (metrics->comparations)++;
+        (metrics->comparisons)++;
     while (i < n1) {
-        (metrics->comparations)++;
+        (metrics->comparisons)++;
         arr[k] = L[i];
         i++;
         k++;
@@ -65,9 +65,9 @@ void merge(long int arr[], int l, int m, int r, BenchMetrics *metrics) {
 
     //copia os elementos restantes do subarray direito, se houver
     if (!(j < n2))
-        (metrics->comparations)++;
+        (metrics->comparisons)++;
     while (j < n2) {
-        (metrics->comparations)++;
+        (metrics->comparisons)++;
         arr[k] = R[j];
         j++;
         k++;
@@ -162,7 +162,7 @@ BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
                 size, 
                 data_types[j], 
                 metrics->execution_time,
-                metrics->comparations,
+                metrics->comparisons,
                 metrics->swaps,
                 metrics->memory_usage);
             free(arr);

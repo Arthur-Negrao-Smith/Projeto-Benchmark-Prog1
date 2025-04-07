@@ -17,7 +17,7 @@ void bubble_sort (long int *arr, long int array_size, BenchMetrics *metrics){
     for (int i = 0; i < array_size -1; i++) {
         //loop interno: compara elementos adjacentes
         for (int j = 0; j < array_size -i -1; j++) {
-            (metrics->comparations)++; //incrementa contador de comparações
+            (metrics->comparisons)++; //incrementa contador de comparações
             //se o elemento atual for maior que o próximo, troca eles
             if (arr[j]>arr[j+1]) {
                 swap(&arr[j], &arr[j + 1]);
@@ -79,7 +79,7 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
                 size, 
                 data_types[j], 
                 metrics->execution_time,
-                metrics->comparations,
+                metrics->comparisons,
                 metrics->swaps,
                 metrics->memory_usage);
 

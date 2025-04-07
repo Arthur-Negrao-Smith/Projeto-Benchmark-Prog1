@@ -43,13 +43,13 @@ int partition(long int arr[], long int low, long int high, BenchMetrics *metrics
         while (low < high && arr[low] <= pivot)
         {
             low++;
-            metrics->comparations++;
+            metrics->comparisons++;
         }
         
         while (low < high && arr[high] > pivot)
         {
             high--;
-            metrics->comparations++;
+            metrics->comparisons++;
         }
 
         swap(&arr[low], &arr[high]);
@@ -119,7 +119,7 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
                 size, 
                 data_types[j], 
                 metrics->execution_time,
-                metrics->comparations,
+                metrics->comparisons,
                 metrics->swaps,
                 metrics->memory_usage);
             //libera memória alocada
