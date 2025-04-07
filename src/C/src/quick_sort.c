@@ -103,7 +103,7 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
 
             clock_t start = clock(); //marca o tempo inicial
 
-            metrics->memory_usage = get_current_memory_usage(size);
+            metrics->memory_usage = get_sort_memory_usage(size, QUICK_NAME);
 
             quick_sort(arr, 0, size-1, metrics); // Executa a ordenação
             clock_t end = clock();//marca o tempo final

@@ -125,27 +125,18 @@ void write_BenchMetrics_array_to_csv(BenchMetrics *array[TOTAL_METRICS_POSSIBLES
         write_to_csv(array[i]);
 }
 
-long long int get_current_memory_usage() {
-    #if defined(_WIN32) || defined(_WIN64)
-        // Windows implementation
-        HANDLE hProcess = GetCurrentProcess();
-        PROCESS_MEMORY_COUNTERS pmc;
-        
-        if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc))) {
-            return pmc.WorkingSetSize;
-        }
-        return 0;
-    #else
-        // Linux implementation
-        FILE* file = fopen("/proc/self/statm", "r");
-        if (file == NULL) return 0;
-        
-        long long memory;
-        if (fscanf(file, "%*s%lld", &memory) != 1) {
-            fclose(file);
-            return 0;
-        }
-        fclose(file);
-        return memory * sysconf(_SC_PAGESIZE);
-    #endif
+long long int get_sort_memory_usage(long int size, const char* algorithm_name) {
+    const long int element_size = sizeof(long int); // 8 bytes em sistemas 64-bit
+    long long base_memory = size * element_size;
+
+    // Fatores empíricos (ajuste conforme necessidade)
+    if (strcmp(algorithm_name, MERGE_NAME) == 0) {
+        return base_memory * 1.8;  // Merge Sort usa array auxiliar
+    } 
+    else if (strcmp(algorithm_name, QUICK_NAME) == 0) {
+        return base_memory * 1.3;  // Quick Sort tem overhead de recursão
+    }
+    else { // Bubble Sort e outros in-place
+        return base_memory * 1.05; // +5% para variáveis temporárias
+    }
 }

@@ -96,5 +96,5 @@
     // Adicione esta função em benchmark.h, logo após os outros protótipos
     /// @brief Will get current memory usage in bytes
     /// @return Memory usage in bytes
-    long long int get_current_memory_usage();
+    long long int get_sort_memory_usage(long int size, const char* algorithm_name);
 #endif // BENCHMARK_H

@@ -66,8 +66,8 @@ BenchMetrics **benchmark_bubble_sort(BenchMetrics *benchmetrics_array[TOTAL_METR
             BenchMetrics *metrics = create_BenchMetrics(algorithm_name, data_type, size); //variável para métricas
 
             clock_t start = clock(); //marca tempo inicial
-            
-            metrics->memory_usage = get_current_memory_usage(size);
+        
+            metrics->memory_usage = get_sort_memory_usage(size, BUBBLE_NAME);
             
             bubble_sort(arr, size, metrics); //executa ordenação
             clock_t end = clock(); //marca tempo final
