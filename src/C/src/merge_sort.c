@@ -127,9 +127,9 @@ BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
 
     //cabeçalho dos resultados
     printf("Merge Sort Performance Test\n");
-    printf("| %-10s | %-20s | %-10s | %-12s | %-10s | %-10s |\n", 
+    printf("| %-10s | %-20s | %-12s | %-12s | %-12s | %-10s |\n", 
         "Size", "Data Type", "Time (s)", "Comparisons", "Swaps", "Memory");
- printf("|------------|----------------------|------------|--------------|------------|------------|\n");
+ printf("|------------|----------------------|--------------|--------------|--------------|------------|\n");
  
     short int counter = 0;
 
@@ -158,7 +158,7 @@ BenchMetrics **benchmark_merge_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
             //imprime resultados formatados
-            printf("| %-10ld | %-20s | %-10.6f | %-12lld | %-10lld | %-10lld |\n",
+            printf("| %-10ld | %-20s | %-12.6f | %-12lld | %-12lld | %-10lld |\n",
                 size, 
                 data_types[j], 
                 metrics->execution_time,
