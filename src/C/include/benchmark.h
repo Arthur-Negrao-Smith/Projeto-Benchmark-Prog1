@@ -37,7 +37,8 @@
     #define WINDOWS_PATH                "src\\results\\data\\"
 
     // Defining Header
-    #define HEADER_OF_CSV "Algoritmo,Ordem dos Dados,Tamanho da Lista,Tempo de execução,Memória usada,Comparações,Trocas\n"
+    #define HEADER_OF_CSV               "Algoritmo,Ordem dos Dados,Tamanho da Lista,Tempo de execução,Memória usada,Comparações,Trocas\n"
+
 
 
     /// @brief Struct to storage BenchMark metrics
@@ -93,8 +94,16 @@
     /// @param  array Array with all BenchMetrics
     void write_BenchMetrics_array_to_csv(BenchMetrics*[TOTAL_METRICS_POSSIBLES]);
     
-    // Adicione esta função em benchmark.h, logo após os outros protótipos
-    /// @brief Will get current memory usage in bytes
-    /// @return Memory usage in bytes
-    long long int get_sort_memory_usage(long int size, const char* algorithm_name);
+
+    /// @brief Will get current memory usage in bytes and allocate memory solicited
+    /// @param size Size in bytes of array to allocate
+    /// @param metrics Metrics to add memory usage
+    /// @return First element of array allocated
+    void *BenchMalloc(long int, BenchMetrics*);
+
+
+    /// @brief Will update the current memory usage
+    /// @param size Size in bytes usage
+    /// @param metrics BenchMetrics to storage data
+    void update_memory_usage(long int, BenchMetrics*);
 #endif // BENCHMARK_H

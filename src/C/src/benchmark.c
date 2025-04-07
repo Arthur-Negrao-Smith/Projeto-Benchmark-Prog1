@@ -2,13 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#if defined(_WIN32) || defined(_WIN64)
-    #define WIN32_LEAN_AND_MEAN
-    #include <windows.h>
-    #include <psapi.h>
-#else
-    #include <unistd.h>
-#endif
+
 
 // Will generate data to all array
 void generate_data(long int arr[], long int size, const char* data_type) {
@@ -107,7 +101,6 @@ short int write_to_csv(BenchMetrics *metrics) {
         file = fopen(path, "a");
     } else {
         file = fopen(path, "a");
-        fprintf(file, "%s", HEADER_OF_CSV);
     }
     
     fprintf(file, "%s,%s,%ld,%lf,%lld,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->comparations, metrics->swaps);
@@ -125,18 +118,13 @@ void write_BenchMetrics_array_to_csv(BenchMetrics *array[TOTAL_METRICS_POSSIBLES
         write_to_csv(array[i]);
 }
 
-long long int get_sort_memory_usage(long int size, const char* algorithm_name) {
-    const long int element_size = sizeof(long int); // 8 bytes em sistemas 64-bit
-    long long base_memory = size * element_size;
+void *BenchMalloc(long int size, BenchMetrics *metrics)
+{
+    metrics->memory_usage += size;
+    return malloc(size);
+}
 
-    // Fatores empíricos (ajuste conforme necessidade)
-    if (strcmp(algorithm_name, MERGE_NAME) == 0) {
-        return base_memory * 1.8;  // Merge Sort usa array auxiliar
-    } 
-    else if (strcmp(algorithm_name, QUICK_NAME) == 0) {
-        return base_memory * 1.3;  // Quick Sort tem overhead de recursão
-    }
-    else { // Bubble Sort e outros in-place
-        return base_memory * 1.05; // +5% para variáveis temporárias
-    }
+void update_memory_usage(long int size, BenchMetrics *metrics)
+{
+    metrics->memory_usage += size;
 }
