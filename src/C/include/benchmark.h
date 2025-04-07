@@ -46,7 +46,7 @@
     {
         long int array_size;
         long long int swaps;
-        long long int comparations;
+        long long int comparisons;
         long long int memory_usage;
         double execution_time;
         char algorithm_name[MAX_ALGORITHM_NAME_SIZE];
