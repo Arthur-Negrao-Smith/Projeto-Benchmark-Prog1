@@ -100,6 +100,7 @@ short int write_to_csv(BenchMetrics *metrics) {
         file = fopen(path, "a");
     } else {
         file = fopen(path, "a");
+        fprintf(file, HEADER_OF_CSV);
     }
     
     fprintf(file, "%s,%s,%ld,%lf,%lld,%lld,%lld\n", metrics->algorithm_name,metrics->data_type, metrics->array_size, metrics->execution_time, metrics->memory_usage, metrics->comparisons, metrics->swaps);
