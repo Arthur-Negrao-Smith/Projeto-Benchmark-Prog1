@@ -31,7 +31,7 @@ class BenchMetrics:
     """
     memory_usage:        tuple[int]
     execution_time:      float
-    comparations:        int
+    comparisons:        int
     swaps:               int
     list_size:           int
     algorithm_name:      str

@@ -75,7 +75,7 @@ class TableData:
            LIST_SIZE: [data.list_size],
            EXECUTION_TIME_NAME_COLUMN: [data.execution_time],
            MEMORY_USAGE_NAME_COLUMN: [data.memory_usage[1] - data.memory_usage[0]],
-           COMPARATIONS_NAME_COLUMN: [data.comparations],
+           COMPARATIONS_NAME_COLUMN: [data.comparisons],
            SWAPS_NAME_COLUMN: [data.swaps] 
         })
         return temp_dataFrame

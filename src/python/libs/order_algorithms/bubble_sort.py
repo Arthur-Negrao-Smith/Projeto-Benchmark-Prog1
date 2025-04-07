@@ -19,7 +19,7 @@ class BubbleSort(ListCreator):
     def __init__(self) -> None:
         super().__init__()
         self.swaps: int = 0 # Swaps counter
-        self.comparations: int = 0 # Comparations counter
+        self.comparisons: int = 0 # Comparations counter
 
     @benchmark
     def benchmarkSort(self, metrics: BenchMetrics) -> Union[BenchMetrics | None]:
@@ -44,7 +44,7 @@ class BubbleSort(ListCreator):
         metrics.algorithm_name = BUBBLE_NAME
         metrics.data_type = self.data_type
         metrics.list_size = len(self.numbers_list)
-        metrics.comparations = self.comparations # Update comparations on metrics
+        metrics.comparisons = self.comparisons # Update comparisons on metrics
         metrics.swaps = self.swaps # Update swaps on metrics
         return metrics
 
@@ -59,7 +59,7 @@ class BubbleSort(ListCreator):
             swaped: bool = False
 
             for j in range(list_size - 1 - i):
-                self.comparations += 1
+                self.comparisons += 1
 
                 if self.numbers_list[j] > self.numbers_list[j+1]:
                     self.swap(a_index=j, b_index=j+1)
@@ -92,6 +92,6 @@ if __name__ == "__main__":
           Data Type: {metrics.data_type}
           Execution time: {metrics.execution_time}
           Memory: {metrics.memory_usage}
-          Comparations: {metrics.comparations}
+          Comparations: {metrics.comparisons}
           Swaps: {metrics.swaps}
         """)

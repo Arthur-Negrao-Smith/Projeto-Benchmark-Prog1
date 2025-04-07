@@ -21,7 +21,7 @@ class MergeSort(ListCreator):
     def __init__(self) -> None:
         super().__init__()
         self.swaps: int = 0 # Swaps counter
-        self.comparations: int = 0 # Comparations counter
+        self.comparisons: int = 0 # Comparations counter
 
     @benchmark
     def benchmarkSort(self, metrics: BenchMetrics) -> Union[BenchMetrics | None]:
@@ -46,7 +46,7 @@ class MergeSort(ListCreator):
         metrics.algorithm_name = MERGE_NAME
         metrics.data_type = self.data_type
         metrics.list_size = len(self.numbers_list)
-        metrics.comparations = self.comparations # Update comparations on metrics
+        metrics.comparisons = self.comparisons # Update comparisons on metrics
         metrics.swaps = self.swaps # Update swaps on metrics
         return metrics
                
@@ -73,7 +73,7 @@ class MergeSort(ListCreator):
             
             # To avoid unnecessary increments
             if not (l < len(left_list) and r < len(right_list)):
-                self.comparations += 1
+                self.comparisons += 1
             # While not finish left or right list
             while l < len(left_list) and r < len(right_list):
                 if left_list[l] < right_list[r]:
@@ -84,31 +84,31 @@ class MergeSort(ListCreator):
                     r += 1
                 k += 1
                 self.swaps += 1
-                self.comparations += 1
+                self.comparisons += 1
 
 
             # To avoid unnecessary increments
             if not (l < len(left_list)):
-                self.comparations += 1
+                self.comparisons += 1
             # Finish append left list
             while l < len(left_list):
                 numbers_list[k] = left_list[l]
                 self.swaps += 1
                 l += 1
                 k += 1         
-                self.comparations += 1   
+                self.comparisons += 1   
 
 
             # To avoid unnecessary increments
             if not (r < len(right_list)):
-                self.comparations += 1
+                self.comparisons += 1
             # Finish append right list
             while r < len(right_list):
                 numbers_list[k] = right_list[r]
                 self.swaps += 1
                 r += 1
                 k += 1            
-                self.comparations += 1
+                self.comparisons += 1
     
 
 if __name__ == "__main__":
@@ -125,6 +125,6 @@ if __name__ == "__main__":
           List size: {metrics.list_size}
           Execution time: {metrics.execution_time}
           Memory: {metrics.memory_usage}
-          Comparations: {metrics.comparations}
+          Comparations: {metrics.comparisons}
           Swaps: {metrics.swaps}
         """)

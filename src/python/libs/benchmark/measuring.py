@@ -39,7 +39,7 @@ def benchmark(func: FunctionType) -> BenchMetrics:
         metrics.algorithm_name = function_metrics.algorithm_name
         metrics.data_type = function_metrics.data_type
         metrics.list_size = function_metrics.list_size
-        metrics.comparations = function_metrics.comparations
+        metrics.comparisons = function_metrics.comparisons
         metrics.swaps = function_metrics.swaps
         
         return metrics

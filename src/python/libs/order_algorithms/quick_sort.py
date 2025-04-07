@@ -22,7 +22,7 @@ class QuickSort(ListCreator):
     """Class to use Quick sort algorithm"""
     def __init__(self) -> None:
         super().__init__()
-        self.comparations: int = 0 # to calculate comparations
+        self.comparisons: int = 0 # to calculate comparisons
         self.swaps: int = 0 # To calculate swaps
 
     @benchmark
@@ -48,7 +48,7 @@ class QuickSort(ListCreator):
         metrics.algorithm_name = QUICK_NAME
         metrics.data_type = self.data_type
         metrics.list_size = len(self.numbers_list)
-        metrics.comparations = self.comparations # Update comparations on metrics
+        metrics.comparisons = self.comparisons # Update comparisons on metrics
         metrics.swaps = self.swaps # Update swaps on metrics
         return metrics
     
@@ -129,7 +129,7 @@ class QuickSort(ListCreator):
         l = left - 1  # Left index
 
         for r in range(left, right):  # Right index
-            self.comparations += 1
+            self.comparisons += 1
             if numbers_list[r] <= pivot:
                 l += 1
                 self.swap(numbers_list=numbers_list, a_index=l, b_index=r)
@@ -156,7 +156,7 @@ class QuickSort(ListCreator):
         sorted(self.numbers_list)
 
         # Update metrics
-        metrics.comparations = -1 # Update comparations on metrics
+        metrics.comparisons = -1 # Update comparisons on metrics
         metrics.swaps = -1 # Update swaps on metrics
         return metrics
 
@@ -174,6 +174,6 @@ if __name__ == "__main__":
           Data Type: {metrics.data_type}
           Execution time: {metrics.execution_time}
           Memory: {metrics.memory_usage}
-          Comparations: {metrics.comparations}
+          Comparations: {metrics.comparisons}
           Swaps: {metrics.swaps}
         """)
