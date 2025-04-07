@@ -115,7 +115,7 @@ BenchMetrics **benchmark_quick_sort(BenchMetrics *benchmetrics_array[TOTAL_METRI
             metrics->execution_time = ((double)(end - start)) / CLOCKS_PER_SEC;
 
             //imprime resultados formatados
-            printf("| %-10ld | %-20s | %-1.6f | %-12lld | %-12lld | %-10lld |\n",
+            printf("| %-10ld | %-20s | %-12.6f | %-12lld | %-12lld | %-10lld |\n",
                 size, 
                 data_types[j], 
                 metrics->execution_time,
